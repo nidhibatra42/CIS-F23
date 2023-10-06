@@ -1,10 +1,6 @@
-import pandas as pd
-import numpy as np
-import Point
+from point import Point
 
 class OutputWriter:
-
-   
 
     def __init__(self, folder, name):
         self.fileExtension = '-output1.txt'

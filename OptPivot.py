@@ -1,6 +1,6 @@
+from point import Point
 import pandas as pd
 import numpy as np
-import Point
 
 class OptPivot:
 

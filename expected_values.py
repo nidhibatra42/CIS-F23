@@ -1,5 +1,5 @@
 import numpy as np
-import OutputWriter
+from outputWriter import OutputWriter
 
 def expected_values(Dj, Aj, Cj):
     #compute transformation between optical tracker and EM coordinates 

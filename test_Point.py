@@ -1,4 +1,4 @@
-import Point
+from point import Point
 import unittest
 
 class PointTest(unittest.TestCase):
@@ -45,3 +45,5 @@ class PointTest(unittest.TestCase):
         self.assertEquals(p.y, -1)
         self.assertEquals(p.z, 3.5)
 
+if __name__ == "__main__":
+    unittest.main()

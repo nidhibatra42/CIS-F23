@@ -1,5 +1,5 @@
+from point import Point
 import pandas as pd
-import Point
 
 class CalibrationObject:
 
