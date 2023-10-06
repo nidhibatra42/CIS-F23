@@ -40,7 +40,5 @@ class CalibrationObject:
 
         
 
-calObj = CalibrationObject('PA1 Student Data', 'pa1-unknown-j')
-
 
 

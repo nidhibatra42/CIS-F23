@@ -1,4 +1,5 @@
 import numpy as np
+import OutputWriter
 
 def expected_values(Dj, Aj, Cj):
     #compute transformation between optical tracker and EM coordinates 
@@ -30,5 +31,5 @@ def expected_values(Dj, Aj, Cj):
     CiExpected = np.dot(FDFA, cj)
 
     #output Ci expected 
-    OutputCreator(CiExpected)
+    OutputWriter.add_frame(CiExpected)
    
