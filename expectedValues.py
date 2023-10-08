@@ -31,5 +31,5 @@ def expected_values(Dj, Aj, Cj):
     CiExpected = np.dot(FDFA, cj)
 
     #output Ci expected 
-    OutputWriter.add_frame(CiExpected)
+    return CiExpected
    

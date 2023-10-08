@@ -2,7 +2,7 @@ import numpy as np
 from pointSet import PointSet
 from pytransform3d.transformations import transform_from
 
-def em_pivot_calibration(Gj):
+def opt_pivot_calibration(Gj):
     
     #Find Go
     Go = np.mean(Gj)
