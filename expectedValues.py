@@ -1,4 +1,6 @@
 import numpy as np
+from pointSet import PointSet
+from pytransform3d.transformations import transform_from
 from outputWriter import OutputWriter
 
 def expected_values(Dj, Aj, Cj):
@@ -21,10 +23,18 @@ def expected_values(Dj, Aj, Cj):
     cj = Cj - Co
 
     #compute transformation FD
-    FD = np.dot(Dj, np.linalg.inv(dj))
+    DjSet = PointSet(Dj)
+    djSet = PointSet(dj)
+    R_D, p_D = DjSet.find_registration(djSet)
+    FD = transform_from(R_D, p_D)
+    
+
 
     #compute transformation FA
-    FA = np.dot(Aj, np.linalg.inv(aj))
+    AjSet = PointSet(Aj)
+    ajSet = PointSet(aj)
+    R_A, p_A = AjSet.find_registration(ajSet)
+    FA = transform_from(R_A, p_A)
 
     #compute Ci expected 
     FDFA = np.dot(np.linalg.inv(FD), FA)
