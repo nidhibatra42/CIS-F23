@@ -1,8 +1,9 @@
 import numpy as np
 from pointSet import PointSet
+from emPivotCalibration import em_pivot_calibration
 from pytransform3d.transformations import transform_from
 
-def pivot_calibration_optical(Dj, Hj):
+def opt_pivot_calibration(Dj, Hj):
     #Find Go
     Do = np.mean(Dj)
     #find gj
