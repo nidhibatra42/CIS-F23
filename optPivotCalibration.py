@@ -4,9 +4,18 @@ from emPivotCalibration import em_pivot_calibration
 from pytransform3d.transformations import transform_from
 
 def opt_pivot_calibration(Dj, Hj):
-    #Find Go
+    """_summary_
+
+    Args:
+        Dj (_type_): _description_
+        Hj (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """    
+    #Find D0
     Do = np.mean(Dj)
-    #find gj
+    #find dj
     dj = Dj - Do
     #Find transformation FD 
  

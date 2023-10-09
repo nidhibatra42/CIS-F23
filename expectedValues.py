@@ -4,6 +4,16 @@ from pytransform3d.transformations import transform_from
 from outputWriter import OutputWriter
 
 def expected_values(Dj, Aj, Cj):
+    """_summary_
+
+    Args:
+        Dj (_type_): _description_
+        Aj (_type_): _description_
+        Cj (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """    
     #compute transformation between optical tracker and EM coordinates 
 
     #Dj

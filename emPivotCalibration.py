@@ -2,8 +2,13 @@ import numpy as np
 from pointSet import PointSet
 from pytransform3d.transformations import transform_from
 
+
 def em_pivot_calibration(Gj):
-    
+    """_summary_
+
+    Args:
+        Gj (_type_): _description_
+    """    
     #Find Go
     Go = np.mean(Gj)
     #find gj

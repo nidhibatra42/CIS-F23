@@ -1,18 +1,27 @@
 import numpy as np
 
 class PointSet:
-
+    """_summary_
+    """
 
     def __init__(self, points):
-        """Initialize a point set with a 2d list of points.
-            Each point should have a list with the x, y, z coors.
-            """
+        """_summary_
+
+        Args:
+            points (_type_): _description_
+        """        
+
         self.points = points
 
     def find_registration(self, b):
         """Find R value for point set registration for class object
             onto new point set b
 
+        Args:
+            b (_type_): _description_
+
+        Returns:
+            _type_: _description_
             TODO: error case if a and b don't have the same number of points
             """
         #Calculate H

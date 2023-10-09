@@ -2,7 +2,8 @@ from point import Point
 import pandas as pd
 
 class CalibrationObject:
-
+    """_summary_
+    """
     numBaseMarkers = 0
     numOptCalMarkers = 0
     numEMCalMarkers = 0
@@ -10,14 +11,22 @@ class CalibrationObject:
     a = []
     c = []
 
+    
     def __init__(self, folder, name):
+        """_summary_
+
+        Args:
+            folder (_type_): _description_
+            name (_type_): _description_
+        """        
         self.fileExtension = '-calbody.txt'
         self.fileName =  folder + '/' + name + self.fileExtension
         self.data = pd.read_csv(self.fileName, delimiter=',')
         self.data_setup()
 
     def data_setup(self):
-
+        """_summary_
+        """
         x_coors = self.data.iloc[:,0]
         y_coors = self.data.iloc[:,1]
         z_coors = self.data.iloc[:,2]

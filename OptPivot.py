@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 
 class OptPivot:
+    """_summary_
+    """    
 
     numBaseMarkers = 0
     numOptProbeMarkers = 0
@@ -12,13 +14,20 @@ class OptPivot:
     h = [[]]
 
     def __init__(self, folder, name):
+        """_summary_
+
+        Args:
+            folder (_type_): _description_
+            name (_type_): _description_
+        """        
         self.fileExtension = '-optpivot.txt'
         self.fileName =  folder + '/' + name + self.fileExtension
         self.data = pd.read_csv(self.fileName, delimiter=',')
         self.data_setup()
 
     def data_setup(self):
-
+        """_summary_
+        """
         x_coors = self.data.iloc[:,0]
         y_coors = self.data.iloc[:,1]
         z_coors = self.data.iloc[:,2]
