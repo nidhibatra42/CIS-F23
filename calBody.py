@@ -1,7 +1,7 @@
 from point import Point
 import pandas as pd
 
-class CalibrationObject:
+class CalBody:
     """_summary_
     """
     numBaseMarkers = 0
@@ -43,6 +43,21 @@ class CalibrationObject:
                 self.a.append(p)
             else:
                 self.c.append(p)
+        
+        self.array_setup()
+    
+    def array_setup(self):
+        self.dArray = []
+        self.aArray = []
+        self.cArray = []
+
+        for i in range(len(self.d)):
+            self.dArray.append(self.d[i].to_array())
+        for i in range(len(self.a)):
+            self.aArray.append(self.a[i].to_array())
+        for i in range(len(self.c)):
+            self.cArray.append(self.c[i].to_array())
+        
 
 
 

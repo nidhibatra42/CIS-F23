@@ -3,35 +3,20 @@ from pointSet import PointSet
 from pytransform3d.transformations import transform_from
 from outputWriter import OutputWriter
 
-def expected_values(Dj, Aj, Cj):
+def expected_values(Dj, Aj, dj, aj, cj):
     """_summary_
 
     Args:
         Dj (_type_): _description_
         Aj (_type_): _description_
         Cj (_type_): _description_
+        dj (_type_): _description_
+        aj (_type_): _description_
+        cj (_type_): _description_
 
     Returns:
         _type_: _description_
-    """    
-    #compute transformation between optical tracker and EM coordinates 
-
-    #Dj
-    #Find Do
-    Do = np.mean(Dj)
-    #find dj
-    dj = Dj - Do
-    #Aj
-    #Find Ao
-    Ao = np.mean(Aj)
-    #find aj
-    aj = Aj - Ao
-    #Cj
-    #Find Co
-    Co = np.mean(Cj)
-    #find cj
-    cj = Cj - Co
-
+    """  
     #compute transformation FD
     DjSet = PointSet(Dj)
     djSet = PointSet(dj)
