@@ -11,7 +11,7 @@ EMPivot.py- This is a class we wrote for processing EM pivot data.
 
 OptPivot.py- This is a class we wrote for processing optical tracking data. 
 
-OutputWriter.py
+OutputWriter.py - This class writes the output data to a text file. 
 
 Point.py
 
