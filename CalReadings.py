@@ -33,26 +33,43 @@ class CalReadings:
         y_coors = self.data.iloc[:,1]
         z_coors = self.data.iloc[:,2]
 
-        numBaseMarkers = int(self.data.columns[0])
-        numOptCalMarkers = int(self.data.columns[1])
-        numEMCalMarkers = int(self.data.columns[2])
-        numFrames = int(self.data.columns[3])
+         with open(self.fileName, 'r') as file:
+            firstLine = file.readline().strip()
+            vals = firstLine.split(',')
+            
+            for val in vals:
+                val.strip()
+            
+            vals.pop()
+            numBaseMarkers, numOptCalMarkers, numEMCalMarkers, numFrames = map(int, vals)
     
         totalItemsPerFrame = numBaseMarkers + numOptCalMarkers + numEMCalMarkers
         
-        self.d = np.zeros((numFrames, totalItemsPerFrame))
-        self.a = np.zeros((numFrames, totalItemsPerFrame))
-        self.c = np.zeros((numFrames, totalItemsPerFrame))
+        self.d = []
+        self.a = []
+        self.c = []
 
         for i in range(numFrames):
+            self.d.append([])
+            self.a.append([])
+            self.c.append([])
             for j in range(totalItemsPerFrame):
                 p = Point(x_coors[i * totalItemsPerFrame + j], y_coors[i * totalItemsPerFrame + j], z_coors[i * totalItemsPerFrame + j])
                 if j < numBaseMarkers:
-                    self.d[i][j] = p
+                    self.d[i].append(p)
                 elif j < numBaseMarkers + numOptCalMarkers:
-                    self.a[i][j] = p
+                    self.a[i].append(p)
                 else:
-                    self.c[i][j] = p
+                    self.c[i].append(p)
+
+
+
+
+        
+
+
+
+
 
 
 

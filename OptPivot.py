@@ -38,18 +38,18 @@ class OptPivot:
     
         totalItemsPerFrame = numBaseMarkers + numOptProbeMarkers
         
-        self.d = np.zeros((numFrames, totalItemsPerFrame))
-        self.h = np.zeros((numFrames, totalItemsPerFrame))
+        self.d = []
+        self.h = []
        
         for i in range(numFrames):
+            self.d.append([])
+            self.h.append([])
             for j in range(totalItemsPerFrame):
                 p = Point(x_coors[i * totalItemsPerFrame + j], y_coors[i * totalItemsPerFrame + j], z_coors[i * totalItemsPerFrame + j])
                 if j < numBaseMarkers:
-                    self.d[i][j] = p
+                    self.d[i].append(p)
                 else:
-                    self.h[i][j] = p
-
-
+                    self.h[i].append(p)
 
 
         

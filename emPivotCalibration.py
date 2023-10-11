@@ -18,7 +18,7 @@ def em_pivot_calibration(emPivot):
 
     #Create arrays for F_G[k] and t_g[k]
     F_G = []
-    t_g = []
+   # t_g = []
     for k in range(emPivot.numFrames):
         GjSet = PointSet(Gj[k])
         gjSet = PointSet(gj[k])
@@ -27,22 +27,22 @@ def em_pivot_calibration(emPivot):
         F_G_k = (transform_from(R_fK, p_fK))
 
         F_G.append(F_G_k)
-       # Calculate t_g[k] by applying the inverse transformation to each point in Gj[k]
-        t_g_k = np.zeros((emPivot.numProbeMarkers, 3))
-        for i in range(emPivot.numProbeMarkers):
-            t_g_k[i] = np.dot(np.linalg.inv(F_G_k[:3, :3]), Gj[k][i] - F_G_k[:3, 3])
-
-        t_g.append(t_g_k)
-
-    # Use np.linalg.lstsq to estimate p_dimple
-    t_g = np.array(t_g).reshape(-1, 3)  # Reshape t_g for the least squares optimization
-
-    A = np.zeros((emPivot.numFrames * emPivot.numProbeMarkers, 16))
-    for i in range(emPivot.numFrames):
-        for j in range(emPivot.numProbeMarkers):
-            A[i * emPivot.numProbeMarkers + j] = F_G[i].flatten()
-
-    p_dimple, _, _, _ = np.linalg.lstsq(A, t_g, rcond=None)
-
+        #t_g.append(np.dot(np.linalg.inv(F_G_k), Gj[k]))
+        
+    t_g = np.mean(Gj, axis=0)
+  #  p_dimple = np.linalg.lstsq(F_G, t_g)
+    p_dimple = least_squares_minimizer(emPivot.numFrames, F_G, t_g, Gj)
+    
     return p_dimple
 
+def least_squares_minimizer(numFrames, F_G, t_g, Gj):
+        # Minimize the least squares error.
+    for i in range(100):
+        error = 0
+        for k in range(numFrames):
+            error += np.sum((F_G[k] * t_g - Gj[k])**2)
+
+        # Update the estimated pivot location.
+        t_g = t_g - np.dot(F_G[0].T, (F_G[0] * t_g - Gj[0])) / np.dot(F_G[0].T, F_G[0])
+    
+    return t_g
