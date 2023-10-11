@@ -4,6 +4,7 @@ from pytransform3d.transformations import transform_from
 import unittest
 
 class RegistrationTest(unittest.TestCase):
+    #testing our 3D point set registration algorithim (question 2)
     def test_registration(self):
         # Generate a random 3D point cloud with 100 points
         num_points = 100
@@ -24,6 +25,7 @@ class RegistrationTest(unittest.TestCase):
         matrix_calculated = transform_from(Rnew, pnew)
         matrix_expected = transform_from(rotation_matrix, translation_vector)
 
+        #assert the matricies are equal
         self.assertEquals(matrix_calculated, matrix_expected)
 
 if __name__ == "__main__":
