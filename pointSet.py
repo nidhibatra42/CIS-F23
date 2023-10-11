@@ -1,29 +1,30 @@
 import numpy as np
 
 class PointSet:
-    """_summary_
+    """A class to perform point set registration
     """
 
     def __init__(self, points):
-        """_summary_
+         """Initialize a PointSet object with a set of 3D points.
 
         Args:
-            points (_type_): _description_
-        """        
+            points (numpy.ndarray): An array of 3D points.
+        """     
 
         self.points = points
 
     def find_registration(self, b):
-        """Find R value for point set registration for class object
-            onto new point set b
+        """Find the rotation matrix and translation vector for registering
+        the current point set onto a new point set 'b'.
 
         Args:
-            b (_type_): _description_
+            b (PointSet): Another PointSet object to register with.
 
         Returns:
-            _type_: _description_
-            TODO: error case if a and b don't have the same number of points
-            """
+            R (numpy.ndarray): The rotation matrix.
+            p (numpy.ndarray): The translation vector.
+        """
+    
         #Calculate H
         H = np.empty((3, 3))
 
@@ -52,19 +53,18 @@ class PointSet:
         return R, p
 
     def check_rot_algorithm(self, R, Ut, V):
-        """_summary_
+        """Ensure that the determinant of R is 1, or negate the last term of V to fix it.
+        Note: This algorithm works for the noiseless case.
 
         Args:
-            R (_type_): _description_
-            Ut (_type_): _description_
-            V (_type_): _description_
+            R (numpy.ndarray): The rotation matrix.
+            Ut (numpy.ndarray): The transpose of the left singular vector.
+            V (numpy.ndarray): The right singular vector.
 
         Returns:
-            _type_: _description_
-        """        """Confirm that determinant of R is 1,
-            or negate the last term of V to fix it
-            Note: this algorithm works for noiseless case
+            R (numpy.ndarray): The corrected rotation matrix.
         """
+        
         #Check determinant
         if self.is_almost_one(np.linalg.det(R)):
             return R
@@ -77,7 +77,7 @@ class PointSet:
     
     
     def find_translation(self, R, b):
-        """Find p between self and other point cloud, given R"""
+        """Find the translation vector 'p' between self and another point cloud 'b', given the rotation matrix 'R'."""
         a_bar = self.mean_point(self.points)
         b_bar = self.mean_point(b.points)
 
@@ -85,22 +85,25 @@ class PointSet:
     
     
     def is_almost_one(self, det):
-        """_summary_
+       """Check if the determinant of a matrix is almost equal to 1.
 
         Args:
-            det (_type_): _description_
+            det (float): The determinant value to check.
 
         Returns:
-            _type_: _description_
-        """        
+            bool: True if the determinant is almost 1, False otherwise.
+        """      
         return abs(det - 1) <= 1e-9
     
     def mean_point(self, points):
-        """_summary_
+         """Calculate the mean point for a set of 3D points.
 
         Args:
-            points (_type_): _description_
-        """        
+            points (numpy.ndarray): An array of 3D points.
+
+        Returns:
+            list: The mean point as a list [mean_x, mean_y, mean_z].
+        """      
         mean = [0, 0, 0]
 
         for point in points:
