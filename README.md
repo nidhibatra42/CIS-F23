@@ -7,7 +7,7 @@ main.py - This is how our program is executed. In this file, the name of the fol
 CalReadings.py -  This class reads calibration data from a specified file, processes it, and organizes it into
 three different lists based on marker types (Base Markers, OptCal Markers, and EMCal Markers).
 
-EMPivot.py- 
+EMPivot.py- This is a class we wrote for processing EM pivot data. 
 
 OptPivot.py
 
