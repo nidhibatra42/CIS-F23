@@ -33,8 +33,22 @@ def expected_values(Dj, Aj, dj, aj, cj):
 
     #compute Ci expected 
     FDFA = np.dot(np.linalg.inv(FD), FA)
-    CiExpected = np.dot(FDFA, cj)
 
+    cj_4d = []
+    for i in range(len(cj)):
+        cj_4d.append([])
+        for val in cj[i]:
+            cj_4d[i].append(val)
+        cj_4d[i].append(1)
+    
+    cjt = np.transpose(cj_4d)
+
+
+    CiExpected = np.dot(FDFA, cjt)
+
+    CiExpected = np.delete(CiExpected, 3, axis=0)
+
+    CiExpected = np.transpose(CiExpected)
     #output Ci expected 
     return CiExpected
    

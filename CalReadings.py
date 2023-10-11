@@ -5,14 +5,6 @@ import numpy as np
 class CalReadings:
     """_summary_
     """
-    numBaseMarkers = 0
-    numOptCalMarkers = 0
-    numEMCalMarkers = 0
-    numFrames = 0
-
-    d = [[]]
-    a = [[]]
-    c = [[]]
 
     def __init__(self, folder, name):
         """_summary_
@@ -33,7 +25,7 @@ class CalReadings:
         y_coors = self.data.iloc[:,1]
         z_coors = self.data.iloc[:,2]
 
-         with open(self.fileName, 'r') as file:
+        with open(self.fileName, 'r') as file:
             firstLine = file.readline().strip()
             vals = firstLine.split(',')
             
@@ -41,23 +33,23 @@ class CalReadings:
                 val.strip()
             
             vals.pop()
-            numBaseMarkers, numOptCalMarkers, numEMCalMarkers, numFrames = map(int, vals)
+            self.numBaseMarkers, self.numOptCalMarkers, self.numEMCalMarkers, self.numFrames = map(int, vals)
     
-        totalItemsPerFrame = numBaseMarkers + numOptCalMarkers + numEMCalMarkers
+        totalItemsPerFrame = self.numBaseMarkers + self.numOptCalMarkers + self.numEMCalMarkers
         
         self.d = []
         self.a = []
         self.c = []
 
-        for i in range(numFrames):
+        for i in range(self.numFrames):
             self.d.append([])
             self.a.append([])
             self.c.append([])
             for j in range(totalItemsPerFrame):
                 p = Point(x_coors[i * totalItemsPerFrame + j], y_coors[i * totalItemsPerFrame + j], z_coors[i * totalItemsPerFrame + j])
-                if j < numBaseMarkers:
+                if j < self.numBaseMarkers:
                     self.d[i].append(p)
-                elif j < numBaseMarkers + numOptCalMarkers:
+                elif j < self.numBaseMarkers + self.numOptCalMarkers:
                     self.a[i].append(p)
                 else:
                     self.c[i].append(p)
