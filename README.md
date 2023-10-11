@@ -9,7 +9,7 @@ three different lists based on marker types (Base Markers, OptCal Markers, and E
 
 EMPivot.py- This is a class we wrote for processing EM pivot data. 
 
-OptPivot.py
+OptPivot.py- This is a class we wrote for processing optical tracking data. 
 
 OutputWriter.py
 
