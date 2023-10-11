@@ -1,31 +1,27 @@
 class Point:
-    """_summary_
-    """    
+    """Class representing a 3D point in space."""  
     def __init__(self, x = 0, y = 0, z = 0):
-        """_summary_
+        """Initialize a 3D point.
 
         Args:
-            x (int, optional): _description_. Defaults to 0.
-            y (int, optional): _description_. Defaults to 0.
-            z (int, optional): _description_. Defaults to 0.
-        """        
-        self.x = x
-        self.y = y
-        self.z = z
+            x (int, optional): The x-coordinate of the point. Defaults to 0.
+            y (int, optional): The y-coordinate of the point. Defaults to 0.
+            z (int, optional): The z-coordinate of the point. Defaults to 0.
+        """ 
     
     def to_array(self):
-        """_summary_
+        """Convert the point to a list of coordinates.
 
         Returns:
-            _type_: _description_
-        """        
+            list: A list containing the x, y, and z coordinates of the point.
+        """ 
         return [self.x, self.y, self.z]
     
     def from_array(self, pointArray):
-        """_summary_
+        """Set the point's coordinates from a list.
 
         Args:
-            pointArray (_type_): _description_
+            pointArray (list): A list containing the x, y, and z coordinates to set.
         """        
         self.x = pointArray[0]
         self.y = pointArray[1]
