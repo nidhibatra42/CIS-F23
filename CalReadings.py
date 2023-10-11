@@ -24,7 +24,7 @@ class CalReadings:
         folder (str): The folder where the calibration data file is located.
         name (str): The name of the calibration data file.
     """
-
+    
     def __init__(self, folder, name):
         """Initialize the CalReadings object with folder and name.
 
