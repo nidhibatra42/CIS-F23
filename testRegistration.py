@@ -20,11 +20,10 @@ class RegistrationTest(unittest.TestCase):
 
         # Calculate and compare the transformation parameters with the known transformation.
         Rnew, pnew = source_cloud_set.find_registration(target_cloud_set)
+        
 
-        matrix_calculated = transform_from(Rnew, pnew)
-        matrix_expected = transform_from(rotation_matrix, translation_vector)
-
-        self.assertEquals(matrix_calculated, matrix_expected)
+        self.assertAlmostEquals(Rnew, rotation_matrix, places=1e-3)
+        self.assertAlmostEquals(pnew, translation_vector, places=1e-3)
 
 if __name__ == "__main__":
     unittest.main()

@@ -20,7 +20,7 @@ def expected_values(Dj, Aj, dj, aj, cj):
     #compute transformation FD
     DjSet = PointSet(Dj)
     djSet = PointSet(dj)
-    R_D, p_D = DjSet.find_registration(djSet)
+    R_D, p_D = djSet.find_registration(DjSet)
     FD = transform_from(R_D, p_D)
     
 
@@ -28,7 +28,7 @@ def expected_values(Dj, Aj, dj, aj, cj):
     #compute transformation FA
     AjSet = PointSet(Aj)
     ajSet = PointSet(aj)
-    R_A, p_A = AjSet.find_registration(ajSet)
+    R_A, p_A = ajSet.find_registration(AjSet)
     FA = transform_from(R_A, p_A)
 
     #compute Ci expected 

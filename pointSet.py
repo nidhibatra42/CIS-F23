@@ -47,7 +47,7 @@ class PointSet:
         R = np.dot(V, Ut)
 
         R = self.check_rot_algorithm(R, Ut, V)
-        p = self.find_translation(b)
+        p = self.find_translation(R, b)
 
         return R, p
 
@@ -75,26 +75,14 @@ class PointSet:
 
         return np.dot(V, Ut)
     
-    '''
+    
     def find_translation(self, R, b):
         """Find p between self and other point cloud, given R"""
-        return np.mean(b.points) - np.dot(R, np.mean(self.points))
+        a_bar = self.mean_point(self.points)
+        b_bar = self.mean_point(b.points)
+
+        return b_bar - np.dot(R, a_bar)
     
-    '''
-
-    def find_translation(self, b):
-        """_summary_
-
-        Args:
-            b (_type_): _description_
-
-        Returns:
-            _type_: _description_
-        """        
-        a_tilde = np.mean(self.points, axis=0)
-        b_tilde = np.mean(b.points, axis=0)
-
-        return b_tilde - a_tilde
     
     def is_almost_one(self, det):
         """_summary_
@@ -106,3 +94,20 @@ class PointSet:
             _type_: _description_
         """        
         return abs(det - 1) <= 1e-9
+    
+    def mean_point(self, points):
+        """_summary_
+
+        Args:
+            points (_type_): _description_
+        """        
+        mean = [0, 0, 0]
+
+        for point in points:
+            for i in range(3):
+                mean[i] += point[i]
+        
+        for i in range(3):
+            mean[i] = mean[i] / len(points)
+
+        return mean
