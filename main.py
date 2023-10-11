@@ -17,6 +17,8 @@ optpiv = OptPivot(folder, fileName)
 
 outputWriter = OutputWriter(folder, fileName, calObj.numBaseMarkers, calRead.numFrames)
 
+outputWriter.add_frame(em_pivot_calibration(empiv))
+
 for i in range(calRead.numFrames):
     DPoints = calRead.d[i]
     APoints = calRead.a[i]
@@ -32,7 +34,7 @@ for i in range(calRead.numFrames):
     
     outputWriter.add_frame(expected_values(DArray, AArray, calObj.dArray, calObj.aArray, calObj.cArray))
     
-    
+
     
     
     

@@ -27,8 +27,8 @@ class PointSet:
         #Calculate H
         H = np.empty((3, 3))
 
-        a_tilde = self.points - np.mean(self.points)
-        b_tilde = b.points - np.mean(b.points)
+        a_tilde = self.points - np.mean(self.points, axis=0)
+        b_tilde = b.points - np.mean(b.points, axis=0)
         
         for i in range(0, min(len(self.points), len(b.points))):
             H += np.matrix([
@@ -47,24 +47,62 @@ class PointSet:
         R = np.dot(V, Ut)
 
         R = self.check_rot_algorithm(R, Ut, V)
-        p = self.find_translation(R, b)
+        p = self.find_translation(b)
 
         return R, p
 
     def check_rot_algorithm(self, R, Ut, V):
-        """Confirm that determinant of R is 1,
+        """_summary_
+
+        Args:
+            R (_type_): _description_
+            Ut (_type_): _description_
+            V (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """        """Confirm that determinant of R is 1,
             or negate the last term of V to fix it
             Note: this algorithm works for noiseless case
         """
         #Check determinant
-        if np.det(R) == 1:
+        if self.is_almost_one(np.linalg.det(R)):
             return R
         
         #Negate last value if necessary
-        V[2] = -1 * V[2]
+        for frame in V:
+            frame[2] = -frame[2]
+
         return np.dot(V, Ut)
     
+    '''
     def find_translation(self, R, b):
         """Find p between self and other point cloud, given R"""
-        return np.mean(b) - np.dot(R, np.mean(self.points))
+        return np.mean(b.points) - np.dot(R, np.mean(self.points))
     
+    '''
+
+    def find_translation(self, b):
+        """_summary_
+
+        Args:
+            b (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """        
+        a_tilde = np.mean(self.points, axis=0)
+        b_tilde = np.mean(b.points, axis=0)
+
+        return b_tilde - a_tilde
+    
+    def is_almost_one(self, det):
+        """_summary_
+
+        Args:
+            det (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """        
+        return abs(det - 1) <= 1e-9
