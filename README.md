@@ -13,7 +13,7 @@ OptPivot.py- This is a class we wrote for processing optical tracking data.
 
 OutputWriter.py - This class writes the output data to a text file. 
 
-Point.py
+Point.py- This class works to transform a point to a list representation and that representation back to a point. 
 
 calBody.py
 
