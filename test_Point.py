@@ -2,14 +2,14 @@ from point import Point
 import unittest
 
 class PointTest(unittest.TestCase):
-    """_summary_
+    """Test cases for the Point class.
 
     Args:
-        unittest (_type_): _description_
+        unittest (_type_): This class inherits from unittest.TestCase.
     """
     def test_point_initialized_with_zeros(self):
-        """_summary_
-        """        
+        """Test if a Point is correctly initialized with zeros.
+        """       
         p = Point()
 
         self.assertEquals(p.x, 0)
@@ -17,7 +17,7 @@ class PointTest(unittest.TestCase):
         self.assertEquals(p.z, 0)
     
     def test_point_initialized_with_parameters(self):
-        """_summary_
+        """Test if a Point is correctly initialized with provided parameters.
         """        
         p = Point(1, -1, 3.5)
 
@@ -26,8 +26,8 @@ class PointTest(unittest.TestCase):
         self.assertEquals(p.z, 3.5)
     
     def test_to_array(self):
-        """_summary_
-        """        
+        """Test if the to_array method converts a Point to a list.
+        """         
         p = Point(1, -1, 3.5)
 
         pArray = p.to_array()
@@ -35,8 +35,8 @@ class PointTest(unittest.TestCase):
         self.assertEquals(pArray, [1, -1, 3.5])
     
     def test_change_coordinates(self):
-        """_summary_
-        """        
+        """Test if the coordinates of a Point can be changed.
+        """           
         p = Point(1, -1, 3.5)
 
         p.x = -1
@@ -48,8 +48,8 @@ class PointTest(unittest.TestCase):
         self.assertEquals(p.z, 4.7)
     
     def test_from_array(self):
-        """_summary_
-        """        
+        """Test if the from_array method sets Point coordinates from a list.
+        """       
         p = Point()
 
         pArray = [1, -1, 3.5]
