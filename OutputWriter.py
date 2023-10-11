@@ -1,16 +1,15 @@
 
 class OutputWriter:
-    """_summary_
-    """
+    """Class for writing output data to a text file."""
     def __init__(self, folder, name, numCalMarkers, numFrames):
-        """_summary_
+        """Initialize the OutputWriter.
 
         Args:
-            folder (_type_): _description_
-            name (_type_): _description_
-            numCalMarkers (_type_): _description_
-            numFrames (_type_): _description_
-        """        
+            folder (str): The folder path where the output file will be saved.
+            name (str): The name of the output file.
+            numCalMarkers (int): The number of calibration markers.
+            numFrames (int): The total number of frames in the output.
+        """       
         self.fileExtension = '-output1.txt'
         self.fileName =  folder + '/' + name + self.fileExtension
 
@@ -22,10 +21,10 @@ class OutputWriter:
         
     
     def add_frame(self, ci):
-        """_summary_
+        """Add a frame to the output file.
 
         Args:
-            ci (_type_): _description_
+            ci (list): A list of points representing the frame data.
         """
         with open (self.fileName, 'a') as output:
             for point in ci:
