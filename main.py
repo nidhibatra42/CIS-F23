@@ -8,7 +8,7 @@ from outputWriter import OutputWriter
 from expectedValues import expected_values
 
 folder = "PA1 Student Data"
-fileName = "pa1-debug-a"
+fileName = "pa1-unknown-k"
 
 #folder = input("Enter the folder name: ")
 #fileName = input("Enter the file name: ")
