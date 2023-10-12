@@ -94,5 +94,5 @@ class PointSet:
         Returns:
             bool: True if the determinant is almost 1, False otherwise.
         """      
-        return abs(det - 1) <= 1e-9
+       return abs(det - 1) <= 1e-9
     
