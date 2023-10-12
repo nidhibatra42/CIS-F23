@@ -21,11 +21,11 @@ emPivotCalibration.py - This is the main method used for performing a pivot cali
 
 expectedValues.py - This is the method we wrote for question 4 and it finds the expected positions of markers on the calibration object as outlined in the problem. 
 
-optPivotCalibration.py
+optPivotCalibration.py - This is the method we wrote for question 6 to perform optical pivot calibration and determine the position of the dimple.
 
-pivotCalibration.py
+pivotCalibration.py - This is the method written for question 3 to implement pivot calibration on a more general level. 
 
-pointSet.py
+pointSet.py- This is a class we wrote to perform point set registration and contains our 3D registration algorithim for question 2. 
 
 testPivotCalibration.py
 
