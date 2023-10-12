@@ -1,3 +1,4 @@
+import os
 
 class OutputWriter:
     """Class for writing output data to a text file."""
@@ -12,6 +13,9 @@ class OutputWriter:
         """       
         self.fileExtension = '-output1.txt'
         self.fileName =  folder + '/' + name + self.fileExtension
+
+        if not os.path.exists(folder):
+             os.makedirs(folder)
 
         with open(self.fileName, 'w') as output:
             line1 = f"{numCalMarkers}, {numFrames}, {name + self.fileExtension}\n"
