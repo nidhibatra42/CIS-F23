@@ -1,9 +1,9 @@
 import numpy as np
-from pointSet import PointSet
-from emPivotCalibration import em_pivot_calibration
+from PROGRAMS.pointSet import PointSet
+from PROGRAMS.emPivotCalibration import em_pivot_calibration
 from pytransform3d.transformations import transform_from, transform
-import meanPoint
-import pivotCalibration
+import PROGRAMS.meanPoint as meanPoint
+import PROGRAMS.pivotCalibration as pivotCalibration
 
 def opt_pivot_calibration(optPivot, calBody):
     """_summary_

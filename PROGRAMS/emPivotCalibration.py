@@ -1,10 +1,10 @@
 import numpy as np
-from pointSet import PointSet
+from PROGRAMS.pointSet import PointSet
 from pytransform3d.transformations import transform_from
 from pytransform3d.rotations import quaternion_from_matrix
 from emPivot import EMPivot
-import meanPoint
-import pivotCalibration
+import PROGRAMS.meanPoint as meanPoint
+import PROGRAMS.pivotCalibration as pivotCalibration
 
 def em_pivot_calibration(emPivot):
     """Perform EM pivot calibration.

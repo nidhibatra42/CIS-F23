@@ -1,5 +1,5 @@
 import numpy as np
-from pointSet import PointSet
+from PROGRAMS.pointSet import PointSet
 from pytransform3d.transformations import transform_from
 
 def expected_values(Dj, Aj, dj, aj, cj):

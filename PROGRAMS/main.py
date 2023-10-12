@@ -1,11 +1,11 @@
-from calBody import CalBody
+from PROGRAMS.calBody import CalBody
 from calReadings import CalReadings
 from emPivot import EMPivot
-from emPivotCalibration import em_pivot_calibration
+from PROGRAMS.emPivotCalibration import em_pivot_calibration
 from optPivot import OptPivot
-from optPivotCalibration import opt_pivot_calibration
+from PROGRAMS.optPivotCalibration import opt_pivot_calibration
 from outputWriter import OutputWriter
-from expectedValues import expected_values
+from PROGRAMS.expectedValues import expected_values
 
 inputFolder = "PA1 Student Data"
 outputFolder = "OUTPUT"
