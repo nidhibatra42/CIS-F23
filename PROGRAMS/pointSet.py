@@ -1,5 +1,5 @@
 import numpy as np
-import meanPoint
+import meanPoint as meanPoint
 
 class PointSet:
     """A class to perform point set registration

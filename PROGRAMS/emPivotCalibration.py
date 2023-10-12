@@ -3,8 +3,8 @@ from pointSet import PointSet
 from pytransform3d.transformations import transform_from
 from pytransform3d.rotations import quaternion_from_matrix
 from emPivot import EMPivot
-import meanPoint
-import pivotCalibration
+import meanPoint as meanPoint
+import pivotCalibration as pivotCalibration
 
 def em_pivot_calibration(emPivot):
     """Perform EM pivot calibration.
