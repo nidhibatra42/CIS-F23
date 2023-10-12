@@ -1,3 +1,4 @@
+import os
 from calBody import CalBody
 from calReadings import CalReadings
 from emPivot import EMPivot
@@ -7,8 +8,19 @@ from optPivotCalibration import opt_pivot_calibration
 from outputWriter import OutputWriter
 from expectedValues import expected_values
 
+
+
+# Get the current working directory (with the exe)
+currentFolder = os.getcwd()
+
+# Navigate up one level (parent directory with all other relevant folders)
+parentFolder = os.path.dirname(currentFolder)
+
 inputFolder = "PA1 Student Data"
 outputFolder = "OUTPUT"
+
+inputFolder = os.path.join(parentFolder, inputFolder)
+outputFolder = os.path.join(parentFolder, outputFolder)
 
 fileName = input("Enter the file prefix (i.e. pa1-debug-a): ")
 
