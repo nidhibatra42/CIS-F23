@@ -4,19 +4,18 @@ from pytransform3d.transformations import transform_from
 from outputWriter import OutputWriter
 
 def expected_values(Dj, Aj, dj, aj, cj):
-    """_summary_
+     """Calculate the expected positions of markers on the calibration object.
 
     Args:
-        Dj (_type_): _description_
-        Aj (_type_): _description_
-        Cj (_type_): _description_
-        dj (_type_): _description_
-        aj (_type_): _description_
-        cj (_type_): _description_
+        Dj (list of lists): List of 3D coordinates of electromagnetic base markers.
+        Aj (list of lists): List of 3D coordinates of optical calibration markers on the calibration object.
+        dj (list of lists): List of 3D coordinates of electromagnetic probe markers.
+        aj (list of lists): List of 3D coordinates of optical probe markers.
+        cj (list of lists): List of 3D coordinates of electromagnetic tracker markers on the calibration object.
 
     Returns:
-        _type_: _description_
-    """  
+        numpy.ndarray: Expected positions of electromagnetic tracker markers on the calibration object.
+    """
     #compute transformation FD
     DjSet = PointSet(Dj)
     djSet = PointSet(dj)

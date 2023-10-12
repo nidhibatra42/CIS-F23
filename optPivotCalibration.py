@@ -8,12 +8,12 @@ def opt_pivot_calibration(optPivot, calBody):
     """_summary_
 
     Args:
-        Dj (_type_): _description_
-        Hj (_type_): _description_
+        Dj (numpy.ndarray): Array of 3D coordinates of base markers on the calibration object.
+        Hj (numpy.ndarray): Array of 3D coordinates of the optical probe markers.
 
     Returns:
-        _type_: _description_
-    """    
+        numpy.ndarray: Position of the dimple relative to the Optical tracker base coordinate system.
+    """  
     #Find D0
     Dj = optPivot.DArray
     #find dj
