@@ -17,7 +17,6 @@ class OutputWriter:
             line1 = f"{numCalMarkers}, {numFrames}, {name + self.fileExtension}\n"
             output.write(line1)
             output.close()
-            print(line1)
         
     
     def add_frame(self, ci):
@@ -29,7 +28,7 @@ class OutputWriter:
         with open(self.fileName, 'a') as output:
             for point in ci:
                 rounded_point = [round(x, 2) for x in point]
-                output.write(', '.join(map(str, point)) + '\n')
+                output.write(', '.join(map(str, rounded_point)) + '\n')
             output.close()
 
     def add_pivot(self, pivot):
@@ -41,7 +40,7 @@ class OutputWriter:
 
         with open (self.fileName, 'a') as output:
                 rounded_pivot = [round(x, 2) for x in pivot]
-                output.write(', '.join(map(str, pivot)) + '\n')
+                output.write(', '.join(map(str, rounded_pivot)) + '\n')
         output.close()  
 
 
