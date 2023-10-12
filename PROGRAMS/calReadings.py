@@ -16,7 +16,9 @@ class CalReadings:
         numOptCalMarkers (int): The number of OptCal Markers in the data.
         numEMCalMarkers (int): The number of EMCal Markers in the data.
         numFrames (int): The total number of frames in the data.
-
+        d (list): List to store readings of the electromagnetic tracking system as Points.
+        a (list): List to store readings of optical calibration markers as Points.
+        c (list): List to store measured positions of the electromagnetic tracker markers on the calibration object as Points.
     Methods:
         data_setup(): Process the data and organize it into lists of Point objects.
 
@@ -24,7 +26,10 @@ class CalReadings:
         folder (str): The folder where the calibration data file is located.
         name (str): The name of the calibration data file.
     """
-    
+    d = []
+    a = []
+    c = []
+
     def __init__(self, folder, name):
         """Initialize the CalReadings object with folder and name.
 
@@ -42,29 +47,28 @@ class CalReadings:
 
         This method processes the data, extracts relevant information, and organizes the data into
         separate lists for Base Markers, OptCal Markers, and EMCal Markers.
-
-        Returns:
-            None
-        """       
+        """     
+        #Pandas inherently skips the first line, due to treating
+        #it as a title, so we can call the coordinates as the entire range of rows 
         x_coors = self.data.iloc[:,0]
         y_coors = self.data.iloc[:,1]
         z_coors = self.data.iloc[:,2]
 
+        #Read in the first line, which contains information about the frames
         with open(self.fileName, 'r') as file:
             firstLine = file.readline().strip()
             vals = firstLine.split(',')
             
+            #Remove whitespace
             for val in vals:
                 val.strip()
             
+            #Remove the filename
             vals.pop()
+            
             self.numBaseMarkers, self.numOptCalMarkers, self.numEMCalMarkers, self.numFrames = map(int, vals)
     
         totalItemsPerFrame = self.numBaseMarkers + self.numOptCalMarkers + self.numEMCalMarkers
-        
-        self.d = []
-        self.a = []
-        self.c = []
 
         for i in range(self.numFrames):
             self.d.append([])

@@ -36,10 +36,10 @@ class OutputWriter:
             output.close()
 
     def add_pivot(self, pivot):
-        """_summary_
+        """Add the coordinates of a pivot to the output file
 
         Args:
-            pivot (_type_): _description_
+            pivot (1x3 array): coordinates of the pivot in 3D space
         """   
 
         with open (self.fileName, 'a') as output:

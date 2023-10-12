@@ -1,6 +1,58 @@
 import numpy as np
+import meanPoint
+from pointSet import PointSet
 
-def pivot_calibration(R_fks, p_fks):
+def pivot_calibration(Xj, numFrames, numItems):
+    """Calibrate a pivot point using a series of frames.
+
+    Args:
+        Xj (3D list): A list of frames, where each frame is a list of points represented as 3D coordinates.
+        numFrames (int): The number of frames in the calibration dataset.
+        numItems (int): The number of points in each frame.
+
+    Returns:
+        numpy.ndarray: The calibrated pivot point as a 3D vector.
+    """    
+    Xo = meanPoint.mean_point(Xj[0])
+
+    #find xj
+    xj = []
+   
+    #for each frame
+    for j in range(numItems):
+        xj.append([])
+        #for each coordinate in the point
+        for i in range(3):
+            xj[j].append(Xj[0][j][i] - Xo[i])
+
+    xjSet = PointSet(xj)
+
+    #Create arrays for F_G[k] and t_g[k]
+    R_fks = []
+    p_fks = []
+    
+    #Fill in the arrays
+    for k in range(numFrames):
+        XjSet = PointSet(Xj[k])
+
+        R_fK, p_fK = xjSet.find_registration(XjSet)
+
+        R_fks.append(R_fK)
+        p_fks.append(p_fK)
+
+    return find_p_dimple(R_fks, p_fks)
+
+
+def find_p_dimple(R_fks, p_fks):
+    """Calculate the calibrated pivot point based on rotation and translation matrices.
+
+    Args:
+        R_fks (list of 3x3 arrays): A list of rotation matrices.
+        p_fks (list of 1x3 arrays): A list of translation vectors.
+
+    Returns:
+        numpy.ndarray: The calibrated pivot point as a 3D vector.
+    """    
    
     # Create an initial transformation matrix F_G by horizontally stacking the first rotation matrix 'R_fks[0]' with a negated identity matrix '-np.identity(3)'
     F_G = np.hstack((R_fks[0], -np.identity(3)))

@@ -1,8 +1,8 @@
 def mean_point( points):
-    """_summary_
+    """Find the average point in a list of points
 
     Args:
-        points (_type_): _description_
+        points (list of 1x3 arrays): list of points in 3D space
     """        
     mean = [0, 0, 0]
 

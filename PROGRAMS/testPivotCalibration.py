@@ -1,4 +1,5 @@
 import numpy as np
+import pivotCalibration
 
 def test_calibration(self):
         # Define known transformation parameters (rotation matrix and pivot point)
@@ -12,7 +13,7 @@ def test_calibration(self):
         transformed_points = np.dot(R_i, points.T).T + p_i
 
         # Call your pivot_calibration function to estimate the unknown translation
-        estimated_translation = pivotCalibration(points, transformed_points)
+        estimated_translation = pivotCalibration.pivot_calibration(points, transformed_points)
 
         # Define the ground truth translation
         ground_truth_translation = p_i

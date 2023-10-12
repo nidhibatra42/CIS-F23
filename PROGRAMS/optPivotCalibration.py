@@ -1,8 +1,5 @@
-import numpy as np
 from pointSet import PointSet
-from emPivotCalibration import em_pivot_calibration
 from pytransform3d.transformations import transform_from, transform
-import meanPoint as meanPoint
 import pivotCalibration as pivotCalibration
 
 def opt_pivot_calibration(optPivot, calBody):
@@ -19,10 +16,10 @@ def opt_pivot_calibration(optPivot, calBody):
     Dj = optPivot.DArray
     #find dj
     dj = calBody.dArray
-    #Find transformation FD 
- 
+   
     djSet = PointSet(dj)
 
+    #Find transformation FD and apply it to Hs to get to Pj
     Pj = []
     for k in range(optPivot.numFrames):
         DjSet = PointSet(Dj[k])
@@ -39,73 +36,4 @@ def opt_pivot_calibration(optPivot, calBody):
 
         Pj.append([point[:-1] for point in Pj_k])
     
-    Po = meanPoint.mean_point(Pj[0])
-
-    #find gj
-    pj = []
-    #for each frame
-
-    for j in range(optPivot.numOptProbeMarkers):
-        pj.append([])
-        #for each coordinate in the point
-        for i in range(3):
-            pj[j].append(Pj[0][j][i] - Po[i])
-
-    pjSet = PointSet(pj)
-
-    #Create arrays for F_G[k] and t_g[k]
-    R_fks = []
-    p_fks = []
-    
-
-    for k in range(optPivot.numFrames):
-        PjSet = PointSet(Pj[k])
-
-        R_fK, p_fK = pjSet.find_registration(PjSet)
-
-        R_fks.append(R_fK)
-        p_fks.append(p_fK)
-
-    
-    return pivotCalibration.pivot_calibration(R_fks, p_fks)
-    
-
-
-        
-"""  
-   Hj = optPivot.HArray
-
-    Ho = meanPoint.mean_point(Hj[0])
-
-    hj = []
-
-    for j in range(optPivot.numOptProbeMarkers):
-        hj.append([])
-        #for each coordinate in the point
-        for i in range(3):
-            hj[j].append(Hj[0][j][i] - Ho[i])
-
-
-    Pj = np.dot(F_D_inv, Hj)
-    pj = np.dot(F_D_inv, hj)
-
-    pjSet = PointSet(pj)
-    #Create arrays for F_G[k] and t_g[k]
-    R_fks = []
-    p_fks = []
-    
-
-    for k in range(optPivot.numFrames):
-        PjSet = PointSet(Pj[k])
-
-        R_fK, p_fK = pjSet.find_registration(PjSet)
-
-        R_fks.append(R_fK)
-        p_fks.append(p_fK)
-
-    
-    return pivotCalibration.pivot_calibration(R_fks, p_fks)
-
-"""
-
-
+    return pivotCalibration.pivot_calibration(Pj, optPivot.numFrames, optPivot.numOptProbeMarkers)
