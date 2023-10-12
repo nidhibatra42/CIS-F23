@@ -7,7 +7,7 @@ import meanPoint
 import pivotCalibration
 
 def em_pivot_calibration(emPivot):
-     """Perform EM pivot calibration.
+    """Perform EM pivot calibration.
 
     Args:
         emPivot (EMPivot): An instance of the EMPivot class.

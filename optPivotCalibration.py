@@ -27,7 +27,7 @@ def opt_pivot_calibration(optPivot, calBody):
     for k in range(optPivot.numFrames):
         DjSet = PointSet(Dj[k])
 
-        R_D, p_D = djSet.find_registration(DjSet)
+        R_D, p_D = DjSet.find_registration(djSet)
 
         F_D = transform_from(R_D, p_D)
 
