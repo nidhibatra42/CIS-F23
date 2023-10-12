@@ -8,7 +8,7 @@ from outputWriter import OutputWriter
 from expectedValues import expected_values
 
 folder = "PA1 Student Data"
-fileName = "pa1-unknown-k"
+fileName = "pa1-debug-a"
 
 #folder = input("Enter the folder name: ")
 #fileName = input("Enter the file name: ")
@@ -18,7 +18,7 @@ calRead = CalReadings(folder, fileName)
 empiv = EMPivot(folder, fileName)
 optpiv = OptPivot(folder, fileName)
 
-outputWriter = OutputWriter(folder, fileName, calObj.numBaseMarkers, calRead.numFrames)
+outputWriter = OutputWriter(folder, fileName, calObj.numEMCalMarkers, calRead.numFrames)
 
 outputWriter.add_pivot(em_pivot_calibration(empiv))
 

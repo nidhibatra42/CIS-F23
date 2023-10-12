@@ -40,15 +40,15 @@ class CalBody:
         y_coors = self.data.iloc[:,1]
         z_coors = self.data.iloc[:,2]
 
-        numBaseMarkers = int(self.data.columns[0])
-        numOptCalMarkers = int(self.data.columns[1])
-        numEMCalMarkers = int(self.data.columns[2])
+        self.numBaseMarkers = int(self.data.columns[0])
+        self.numOptCalMarkers = int(self.data.columns[1])
+        self.numEMCalMarkers = int(self.data.columns[2])
 
-        for i in range(numBaseMarkers + numOptCalMarkers + numEMCalMarkers):
+        for i in range(self.numBaseMarkers + self.numOptCalMarkers + self.numEMCalMarkers):
             p = Point(x_coors[i], y_coors[i], z_coors[i])
-            if i < numBaseMarkers:
+            if i < self.numBaseMarkers:
                 self.d.append(p)
-            elif i < numBaseMarkers + numOptCalMarkers:
+            elif i < self.numBaseMarkers + self.numOptCalMarkers:
                 self.a.append(p)
             else:
                 self.c.append(p)
