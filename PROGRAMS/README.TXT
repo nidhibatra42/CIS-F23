@@ -2,6 +2,8 @@
 Hannah Puhov and Nidhi Batra
 Programming Assignment #1 
 
+To run the program open the folder called dist. There you will see the main application. Open this, wait for the cue,  and type in the input file prefix. The output file will be generated and the main will quit. 
+
 main.py - This is how our program is executed. In this file, the name of the folder and file name are specified according to which set of data you chose to run. The appropriate methods (problems 4, 5, and 6) are called to create our output file with the data we generate. 
 
 CalReadings.py -  This class reads calibration data from a specified file, processes it, and organizes it into
