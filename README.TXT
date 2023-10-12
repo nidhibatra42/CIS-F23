@@ -32,3 +32,5 @@ testPivotCalibration.py - This is test method written to test our pivot calibrat
 testRegistration.py - This is a test method written to test our registration method written in question 2.
 
 test_Point.py - This is a test written to test our point class we wrote to help use the package we found in question 1 with the way we wanted to format our data for processing. 
+
+meanPoint.py - We wrote this method to compute the midpoint of the vectors. 
