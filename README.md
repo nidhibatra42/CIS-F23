@@ -19,7 +19,7 @@ calBody.py - This represents the calibration object and sets up the data from th
 
 emPivotCalibration.py - This is the main method used for performing a pivot calibration for the EM probe and determining the position relative to the EM tracker base coordinate system of the dimple in the calibration post as outlined in problem 5. 
 
-expectedValues.py - 
+expectedValues.py - This is the method we wrote for question 4 and it finds the expected positions of markers on the calibration object as outlined in the problem. 
 
 optPivotCalibration.py
 
