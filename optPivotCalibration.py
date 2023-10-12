@@ -1,9 +1,10 @@
 import numpy as np
 from pointSet import PointSet
 from emPivotCalibration import em_pivot_calibration
-from pytransform3d.transformations import transform_from
+import meanPoint
+import pivotCalibration
 
-def opt_pivot_calibration(Dj, Hj):
+def opt_pivot_calibration(optPivot, calBody):
     """_summary_
 
     Args:
@@ -14,9 +15,9 @@ def opt_pivot_calibration(Dj, Hj):
         _type_: _description_
     """    
     #Find D0
-    Do = np.mean(Dj)
+    Dj = optPivot.DArray
     #find dj
-    dj = Dj - Do
+    dj = calBody.dArray
     #Find transformation FD 
  
     DjSet = PointSet(Dj)

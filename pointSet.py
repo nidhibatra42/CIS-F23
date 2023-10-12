@@ -1,4 +1,5 @@
 import numpy as np
+import meanPoint
 
 class PointSet:
     """_summary_
@@ -78,8 +79,8 @@ class PointSet:
     
     def find_translation(self, R, b):
         """Find p between self and other point cloud, given R"""
-        a_bar = self.mean_point(self.points)
-        b_bar = self.mean_point(b.points)
+        a_bar = meanPoint.mean_point(self.points)
+        b_bar = meanPoint.mean_point(b.points)
 
         return b_bar - np.dot(R, a_bar)
     
@@ -95,19 +96,3 @@ class PointSet:
         """        
         return abs(det - 1) <= 1e-9
     
-    def mean_point(self, points):
-        """_summary_
-
-        Args:
-            points (_type_): _description_
-        """        
-        mean = [0, 0, 0]
-
-        for point in points:
-            for i in range(3):
-                mean[i] += point[i]
-        
-        for i in range(3):
-            mean[i] = mean[i] / len(points)
-
-        return mean

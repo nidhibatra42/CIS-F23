@@ -1,15 +1,15 @@
 import numpy as np
-from pointSet import PointSet
-from pytransform3d.transformations import transform_from
 
+def pivot_calibration(R_fks, p_fks):
 
-def pivotCalibration(Hi, hi):
-    #Hi is the uppercase or to tracker point
-    #hi is the lowercase vector from tracker point to its tip
-    # find transformation from tracker to tip
-    HiSet = PointSet(Hi)
-    hiSet = PointSet(hi)
+    F_G = np.hstack((R_fks[0], -np.identity(3)))
+    t_g = -1 * np.array(p_fks[0])
 
-    R_i, p_i = HiSet.find_registration(hiSet)
+    for k in range(1,len(R_fks)):
+        F_G = np.vstack((F_G, np.hstack((R_fks[k], -np.identity(3)))))
+        t_g = np.append(t_g, - p_fks[k])
+    
+    p_dimple, _, _, _ = np.linalg.lstsq(F_G, t_g, None)
 
+    return p_dimple[3:]
     
