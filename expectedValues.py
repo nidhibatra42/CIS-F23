@@ -1,10 +1,9 @@
 import numpy as np
 from pointSet import PointSet
 from pytransform3d.transformations import transform_from
-from outputWriter import OutputWriter
 
 def expected_values(Dj, Aj, dj, aj, cj):
-     """Calculate the expected positions of markers on the calibration object.
+    """Calculate the expected positions of markers on the calibration object.
 
     Args:
         Dj (list of lists): List of 3D coordinates of electromagnetic base markers.

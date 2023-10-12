@@ -6,7 +6,7 @@ class PointSet:
     """
 
     def __init__(self, points):
-         """Initialize a PointSet object with a set of 3D points.
+        """Initialize a PointSet object with a set of 3D points.
 
         Args:
             points (numpy.ndarray): An array of 3D points.
@@ -86,7 +86,7 @@ class PointSet:
     
     
     def is_almost_one(self, det):
-       """Check if the determinant of a matrix is almost equal to 1.
+        """Check if the determinant of a matrix is almost equal to 1.
 
         Args:
             det (float): The determinant value to check.
@@ -94,5 +94,5 @@ class PointSet:
         Returns:
             bool: True if the determinant is almost 1, False otherwise.
         """      
-       return abs(det - 1) <= 1e-9
+        return abs(det - 1) <= 1e-9
     

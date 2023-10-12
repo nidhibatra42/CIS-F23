@@ -1,6 +1,7 @@
 import numpy as np
 from pointSet import PointSet
 from emPivotCalibration import em_pivot_calibration
+from pytransform3d.transformations import transform_from, transform
 import meanPoint
 import pivotCalibration
 
@@ -20,16 +21,91 @@ def opt_pivot_calibration(optPivot, calBody):
     dj = calBody.dArray
     #Find transformation FD 
  
-    DjSet = PointSet(Dj)
     djSet = PointSet(dj)
 
-    R_D, p_D = DjSet.find_registration(djSet)
+    Pj = []
+    for k in range(optPivot.numFrames):
+        DjSet = PointSet(Dj[k])
 
-    F_D = transform_from(R_D, p_D)
+        R_D, p_D = djSet.find_registration(DjSet)
 
-    Pj = np.dot(F_D, Hj)
-    return em_pivot_calibration(Pj)
+        F_D = transform_from(R_D, p_D)
+
+        Hj = optPivot.HArray[k]
+
+        Hj_4d = [point + [1] for point in Hj]
+
+        Pj_k = transform(F_D, Hj_4d)
+
+        Pj.append([point[:-1] for point in Pj_k])
+    
+    Po = meanPoint.mean_point(Pj[0])
+
+    #find gj
+    pj = []
+    #for each frame
+
+    for j in range(optPivot.numOptProbeMarkers):
+        pj.append([])
+        #for each coordinate in the point
+        for i in range(3):
+            pj[j].append(Pj[0][j][i] - Po[i])
+
+    pjSet = PointSet(pj)
+
+    #Create arrays for F_G[k] and t_g[k]
+    R_fks = []
+    p_fks = []
+    
+
+    for k in range(optPivot.numFrames):
+        PjSet = PointSet(Pj[k])
+
+        R_fK, p_fK = pjSet.find_registration(PjSet)
+
+        R_fks.append(R_fK)
+        p_fks.append(p_fK)
+
+    
+    return pivotCalibration.pivot_calibration(R_fks, p_fks)
+    
 
 
+        
+"""  
+   Hj = optPivot.HArray
+
+    Ho = meanPoint.mean_point(Hj[0])
+
+    hj = []
+
+    for j in range(optPivot.numOptProbeMarkers):
+        hj.append([])
+        #for each coordinate in the point
+        for i in range(3):
+            hj[j].append(Hj[0][j][i] - Ho[i])
+
+
+    Pj = np.dot(F_D_inv, Hj)
+    pj = np.dot(F_D_inv, hj)
+
+    pjSet = PointSet(pj)
+    #Create arrays for F_G[k] and t_g[k]
+    R_fks = []
+    p_fks = []
+    
+
+    for k in range(optPivot.numFrames):
+        PjSet = PointSet(Pj[k])
+
+        R_fK, p_fK = pjSet.find_registration(PjSet)
+
+        R_fks.append(R_fK)
+        p_fks.append(p_fK)
+
+    
+    return pivotCalibration.pivot_calibration(R_fks, p_fks)
+
+"""
 
 

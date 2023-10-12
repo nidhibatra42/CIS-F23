@@ -7,7 +7,10 @@ class Point:
             x (int, optional): The x-coordinate of the point. Defaults to 0.
             y (int, optional): The y-coordinate of the point. Defaults to 0.
             z (int, optional): The z-coordinate of the point. Defaults to 0.
-        """ 
+        """
+        self.x  = x
+        self.y = y
+        self.z = z 
     
     def to_array(self):
         """Convert the point to a list of coordinates.

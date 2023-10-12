@@ -26,12 +26,23 @@ class OutputWriter:
         Args:
             ci (list): A list of points representing the frame data.
         """
-        with open (self.fileName, 'a') as output:
+        with open(self.fileName, 'a') as output:
             for point in ci:
+                rounded_point = [round(x, 2) for x in point]
                 output.write(', '.join(map(str, point)) + '\n')
             output.close()
 
-   
+    def add_pivot(self, pivot):
+        """_summary_
+
+        Args:
+            pivot (_type_): _description_
+        """   
+
+        with open (self.fileName, 'a') as output:
+                rounded_pivot = [round(x, 2) for x in pivot]
+                output.write(', '.join(map(str, pivot)) + '\n')
+        output.close()  
 
 
 
