@@ -27,8 +27,8 @@ pivotCalibration.py - This is the method written for question 3 to implement piv
 
 pointSet.py- This is a class we wrote to perform point set registration and contains our 3D registration algorithim for question 2. 
 
-testPivotCalibration.py
+testPivotCalibration.py - This is test method written to test our pivot calibration method in question 3.
 
-testRegistration.py
+testRegistration.py - This is a test method written to test our registration method written in question 2.
 
-test_Point.py
+test_Point.py - This is a test written to test our point class we wrote to help use the package we found in question 1 with the way we wanted to format our data for processing. 
