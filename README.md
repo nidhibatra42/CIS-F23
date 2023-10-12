@@ -15,11 +15,11 @@ OutputWriter.py - This class writes the output data to a text file.
 
 Point.py- This class works to transform a point to a list representation and that representation back to a point. 
 
-calBody.py
+calBody.py - This represents the calibration object and sets up the data from the file in the correct format for us to use. 
 
-emPivotCalibration.py
+emPivotCalibration.py - This is the main method used for performing a pivot calibration for the EM probe and determining the position relative to the EM tracker base coordinate system of the dimple in the calibration post as outlined in problem 5. 
 
-expectedValues.py
+expectedValues.py - 
 
 optPivotCalibration.py
 
