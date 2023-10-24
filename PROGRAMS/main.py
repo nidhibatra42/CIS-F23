@@ -36,19 +36,8 @@ outputWriter.add_pivot(em_pivot_calibration(empiv))
 outputWriter.add_pivot(opt_pivot_calibration(optpiv, calObj))
 
 for i in range(calRead.numFrames):
-    DPoints = calRead.d[i]
-    APoints = calRead.a[i]
-
-    DArray = []
-    AArray = []
-
-    for j in range(len(DPoints)):
-        DArray.append(DPoints[j].to_array())
     
-    for j in range(len(APoints)):
-        AArray.append(APoints[j].to_array())
-    
-    outputWriter.add_frame(expected_values(DArray, AArray, calObj.dArray, calObj.aArray, calObj.cArray))
+    outputWriter.add_frame(expected_values(calRead.dArray[i], calRead.aArray[i], calObj.dArray, calObj.aArray, calObj.cArray))
     
 
     

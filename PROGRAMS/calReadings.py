@@ -26,9 +26,6 @@ class CalReadings:
         folder (str): The folder where the calibration data file is located.
         name (str): The name of the calibration data file.
     """
-    d = []
-    a = []
-    c = []
 
     def __init__(self, folder, name):
         """Initialize the CalReadings object with folder and name.
@@ -70,18 +67,30 @@ class CalReadings:
     
         totalItemsPerFrame = self.numBaseMarkers + self.numOptCalMarkers + self.numEMCalMarkers
 
+        self.d = []
+        self.dArray = []
+        self.a = []
+        self.aArray = []
+        self.c = []
+        self.cArray = []
         for i in range(self.numFrames):
             self.d.append([])
+            self.dArray.append([])
             self.a.append([])
+            self.aArray.append([])
             self.c.append([])
+            self.cArray.append([])
             for j in range(totalItemsPerFrame):
                 p = Point(x_coors[i * totalItemsPerFrame + j], y_coors[i * totalItemsPerFrame + j], z_coors[i * totalItemsPerFrame + j])
                 if j < self.numBaseMarkers:
                     self.d[i].append(p)
+                    self.dArray[i].append(p.to_array())
                 elif j < self.numBaseMarkers + self.numOptCalMarkers:
                     self.a[i].append(p)
+                    self.aArray[i].append(p.to_array())
                 else:
                     self.c[i].append(p)
+                    self.cArray[i].append(p.to_array())
 
 
 
