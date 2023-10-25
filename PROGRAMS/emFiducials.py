@@ -1,8 +1,8 @@
 from point import Point
 import pandas as pd
 
-class EMNav:
-    """A class for working with EM Nav data.
+class EMFiducials:
+    """A class for working with EM Fiducials data.
 
     This class allows you to read and process EM Nav data from a file.
 
@@ -19,10 +19,10 @@ class EMNav:
         """Initialize EM Nav object.
 
         Args:
-            folder (str): The folder path where EMPivot data is located.
-            name (str): The name of the EMPivot data file.
+            folder (str): The folder path where EM Fiducials data is located.
+            name (str): The name of the EM Fiducials data file.
         """      
-        self.fileExtension = '-em-nav.txt'
+        self.fileExtension = '-em-fiducials.txt'
         self.fileName =  folder + '/' + name + self.fileExtension
         self.data = pd.read_csv(self.fileName, delimiter=',')
         self.data_setup()
