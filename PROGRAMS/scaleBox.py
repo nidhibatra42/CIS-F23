@@ -3,7 +3,8 @@ import pandas as pd
 from math import comb
 from expectedValues import expected_values
 from calReadings import CalReadings
-from calBody import CalBody
+from emPivot import EMPivot
+from pivotCalibration import pivot_calibration
 
 
 class BoxScale:
@@ -12,13 +13,14 @@ class BoxScale:
 
     def __init__(self, fileName, inputFolder):
         self.calRead = CalReadings(inputFolder, fileName)
+        self.emPivot = EMPivot(inputFolder, fileName)
   
         #find actual from expected using function from assignment 1, 4 
         self.ciExpected = []
         for i in range(self.calRead.numFrames):
             self.ciExpected.add_frame(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
 
-        self.ci = self.calRead.cArray
+        self.ci = self.emPivot.GArray
 
 
 
@@ -27,16 +29,17 @@ class BoxScale:
         #Max and min store the maxes and mins of each data frame as [x_max_i, y_max_i, z_max_i]
         self.maxes = []
         self.mins = []
+        tolerance = 1.01
         for k in range(len(self.ci)):
             ci_df = pd.DataFrame(self.ci[k], columns=['x', 'y', 'z'])
             max = []
-            max.append(ci_df.x.max)
-            max.append(ci_df.y.max)
-            max.append(ci_df.z.max)
+            max.append(ci_df.x.max * tolerance)
+            max.append(ci_df.y.max * tolerance)
+            max.append(ci_df.z.max * tolerance)
             min = []
-            min.append(ci_df.x.max)
-            min.append(ci_df.y.max)
-            min.append(ci_df.z.max)
+            min.append(ci_df.x.max * tolerance)
+            min.append(ci_df.y.max * tolerance)
+            min.append(ci_df.z.max * tolerance)
             self.maxes.append(max)
             self.mins.append(min)
     
@@ -85,6 +88,10 @@ class BoxScale:
             correctedPoints.append(np.dot(F, calMatrix))
         
         return correctedPoints
+    
+    def recalibrate(self):
+        newPoints = self.distortion_correction()
+        return pivot_calibration(newPoints, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
 
 
