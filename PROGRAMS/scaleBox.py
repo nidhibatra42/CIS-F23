@@ -4,7 +4,11 @@ from math import comb
 from expectedValues import expected_values
 from calReadings import CalReadings
 from emPivot import EMPivot
+from ctFiducials import CTFiducials
+from emFiducials import EMFiducials
+from pointSet import PointSet
 from pivotCalibration import pivot_calibration
+from pytransform3d.transformations import transform_from
 
 
 class BoxScale:
@@ -14,7 +18,8 @@ class BoxScale:
     def __init__(self, fileName, inputFolder):
         self.calRead = CalReadings(inputFolder, fileName)
         self.emPivot = EMPivot(inputFolder, fileName)
-  
+        self.ctFid = CTFiducials(inputFolder, fileName)
+        self.emFid = EMFiducials(inputFolder, fileName)
         #find actual from expected using function from assignment 1, 4 
         self.ciExpected = []
         for i in range(self.calRead.numFrames):
@@ -102,4 +107,19 @@ class BoxScale:
         return pivot_calibration(correctedGArray, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
 
+    def problem_4(self):
+        #Return bj in em coordinates
+        emPivot = self.recalibrate()
+        return []
+        
+    def problem_5(self):
+        #ct coordinates
+        b_i = self.ctFid.bArray
+        b_i_set = PointSet(b_i)
 
+        #em coordinates
+        b_j = self.problem_4()
+        b_j_set = PointSet(b_j)
+
+        R_D, p_D = b_j_set.find_registration(b_i_set)
+        FD = transform_from(R_D, p_D)
