@@ -20,7 +20,7 @@ class BoxScale:
         for i in range(self.calRead.numFrames):
             self.ciExpected.add_frame(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
 
-        self.ci = self.emPivot.GArray
+        self.ci = self.calRead.cArray
 
 
 
@@ -79,19 +79,27 @@ class BoxScale:
                     f_row.append(bs[0] * bs[1] * bs[2])
 
 
-    def distortion_correction(self):
-        correctedPoints = []
+    def generate_distortion_correction(self):
+        calMatrices = []
         for k in range(self.calRead.numFrames):
             F = self.create_F(self.ci[k], k)
 
             calMatrix = np.linalg.lstsq(F, self.ciExpected[k], None)
-            correctedPoints.append(np.dot(F, calMatrix))
+            calMatrices.append(calMatrix)
         
-        return correctedPoints
+        return calMatrices
     
     def recalibrate(self):
-        newPoints = self.distortion_correction()
-        return pivot_calibration(newPoints, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
+        calMatrices = self.generate_distortion_correction()
+
+        correctedGArray = []
+        for k in range(self.emPivot.numFrames):
+            correctedGArray.append([])
+            for point in self.emPivot.GArray[k]:
+                newPoint = np.dot(calMatrices[k], self.create_f_row(self.scale_to_box(point, k)))
+                correctedGArray[k].append(newPoint)
+
+        return pivot_calibration(correctedGArray, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
 
 
