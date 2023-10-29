@@ -9,7 +9,7 @@ from emFiducials import EMFiducials
 from pointSet import PointSet
 from pivotCalibration import pivot_calibration
 from pytransform3d.transformations import transform_from
-
+from meanPoint import mean_point
 
 class BoxScale:
     
@@ -85,32 +85,39 @@ class BoxScale:
 
 
     def generate_distortion_correction(self):
-        calMatrices = []
+        self.calMatrices = []
         for k in range(self.calRead.numFrames):
             F = self.create_F(self.ci[k], k)
 
             calMatrix = np.linalg.lstsq(F, self.ciExpected[k], None)
-            calMatrices.append(calMatrix)
+            self.calMatrices.append(calMatrix)
         
-        return calMatrices
+        
     
     def recalibrate(self):
-        calMatrices = self.generate_distortion_correction()
+        #New p dimple
+        self.generate_distortion_correction()
 
-        correctedGArray = []
-        for k in range(self.emPivot.numFrames):
-            correctedGArray.append([])
-            for point in self.emPivot.GArray[k]:
-                newPoint = np.dot(calMatrices[k], self.create_f_row(self.scale_to_box(point, k)))
-                correctedGArray[k].append(newPoint)
+        correctedGArray = self.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
 
         return pivot_calibration(correctedGArray, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
 
     def problem_4(self):
         #Return bj in em coordinates
-        emPivot = self.recalibrate()
-        return []
+        p_dimple = self.recalibrate()
+
+        correctedEMFid = self.undistort_array(self.emFid.GArray, self.emFid.numFrames)
+
+        emFidMeans = []
+        for frame in correctedEMFid:
+            emFidMeans.append(mean_point(frame))
+
+        finalEMFid = []
+        for point in emFidMeans:
+            finalEMFid.append(np.dot(point, p_dimple))
+        
+        return finalEMFid
         
     def problem_5(self):
         #ct coordinates
@@ -125,3 +132,16 @@ class BoxScale:
         FD = transform_from(R_D, p_D)
 
         return FD
+    
+    def problem_6(self):
+        pass
+
+    def undistort_array(self, points, numFrames):
+        correctedArray = []
+        for k in range(numFrames):
+            correctedArray.append([])
+            for point in self.emPivot.GArray[k]:
+                newPoint = np.dot(self.calMatrices[k], self.create_f_row(self.scale_to_box(point, k)))
+                correctedArray[k].append(newPoint)
+        
+        return correctedArray
