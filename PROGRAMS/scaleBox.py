@@ -123,3 +123,5 @@ class BoxScale:
 
         R_D, p_D = b_j_set.find_registration(b_i_set)
         FD = transform_from(R_D, p_D)
+
+        return FD
