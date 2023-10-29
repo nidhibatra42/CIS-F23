@@ -7,9 +7,11 @@ from emPivot import EMPivot
 from ctFiducials import CTFiducials
 from emFiducials import EMFiducials
 from pointSet import PointSet
+from emNav import EMNav
 from pivotCalibration import pivot_calibration
-from pytransform3d.transformations import transform_from
+from pytransform3d.transformations import transform_from, transform
 from meanPoint import mean_point
+from emOutput import OutputWriter
 
 class BoxScale:
     
@@ -20,6 +22,8 @@ class BoxScale:
         self.emPivot = EMPivot(inputFolder, fileName)
         self.ctFid = CTFiducials(inputFolder, fileName)
         self.emFid = EMFiducials(inputFolder, fileName)
+        self.emNav = EMNav(inputFolder, fileName)
+        self.emOutput = OutputWriter(inputFolder, fileName, self.emNav.numFrames)
         #find actual from expected using function from assignment 1, 4 
         self.ciExpected = []
         for i in range(self.calRead.numFrames):
@@ -134,13 +138,28 @@ class BoxScale:
         return FD
     
     def problem_6(self):
-        pass
+        #Return bj in em coordinates
+        p_dimple = self.recalibrate()
+
+        correctedEMNav = self.undistort_array(self.emNav.GArray, self.emNav.numFrames)
+
+        emNavMeans = []
+        for frame in correctedEMNav:
+            emNavMeans.append(mean_point(frame))
+
+        finalEMNav = []
+        for point in emNavMeans:
+            finalEMNav.append(np.dot(point, p_dimple))
+        
+        for point in finalEMNav:
+            self.emOutput.add_pivot(transform(self.problem_5(), point ))
+
 
     def undistort_array(self, points, numFrames):
         correctedArray = []
         for k in range(numFrames):
             correctedArray.append([])
-            for point in self.emPivot.GArray[k]:
+            for point in points[k]:
                 newPoint = np.dot(self.calMatrices[k], self.create_f_row(self.scale_to_box(point, k)))
                 correctedArray[k].append(newPoint)
         
