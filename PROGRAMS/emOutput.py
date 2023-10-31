@@ -1,6 +1,6 @@
 import os
 
-class OutputWriter:
+class EMOutputWriter:
     """Class for writing output data to a text file."""
     def __init__(self, folder, name, numFrames):
         """Initialize the OutputWriter.

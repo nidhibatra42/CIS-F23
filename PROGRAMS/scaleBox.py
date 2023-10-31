@@ -11,7 +11,10 @@ from emNav import EMNav
 from pivotCalibration import pivot_calibration
 from pytransform3d.transformations import transform_from, transform
 from meanPoint import mean_point
-from emOutput import OutputWriter
+from emOutput import EMOutputWriter
+from outputWriter import OutputWriter
+from calBody import CalBody
+from point import Point
 
 class BoxScale:
     
@@ -19,19 +22,36 @@ class BoxScale:
 
     def __init__(self, fileName, inputFolder, outputFolder):
         self.calRead = CalReadings(inputFolder, fileName)
+        self.calObj = CalBody(inputFolder, fileName)
         self.emPivot = EMPivot(inputFolder, fileName)
         self.ctFid = CTFiducials(inputFolder, fileName)
         self.emFid = EMFiducials(inputFolder, fileName)
         self.emNav = EMNav(inputFolder, fileName)
-        self.emOutput = OutputWriter(outputFolder, fileName, self.emNav.numFrames)
+        self.emOutput = EMOutputWriter(outputFolder, fileName, self.emNav.numFrames)
         #find actual from expected using function from assignment 1, 4 
-        self.ciExpected = []
-        for i in range(self.calRead.numFrames):
-            self.ciExpected.add_frame(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
-
+        
+        self.p1Output = OutputWriter(outputFolder, fileName, self.calObj.numEMCalMarkers, self.calRead.numFrames )
         self.ci = self.calRead.cArray
 
 
+    #it does what it says on the tin
+    def get_ci_expecteds(self):
+        self.ciExpected = []
+        for i in range(self.calRead.numFrames):
+            self.p1Output.add_frame(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
+        
+        #self.calObj.numEMCalMarkers, self.calRead.numFrames
+        o1Data = pd.read_csv(self.fileName, delimiter=',', skiprows=[0, 1, 2], names=['x', 'y', 'z'])
+        x_coors = o1Data['x']
+        y_coors = o1Data['y']
+        z_coors = o1Data['z']
+
+        self.ciExpected = []
+        for k in range (self.calRead.numFrames):
+            self.ciExpected.append([])
+            for j in range(self.calObj.numEMCalMarkers):
+                p = Point(x_coors[k * self.calObj.numEMCalMarkers + j], y_coors[k * self.calObj.numEMCalMarkers + j], z_coors[k * self.calObj.numEMCalMarkers + j]) 
+                self.ciExpected[k].append(p.to_array())  
 
     #need to determine bounding box to scale values
     def create_scale_box(self):
@@ -42,13 +62,13 @@ class BoxScale:
         for k in range(len(self.ci)):
             ci_df = pd.DataFrame(self.ci[k], columns=['x', 'y', 'z'])
             max = []
-            max.append(ci_df.x.max * tolerance)
-            max.append(ci_df.y.max * tolerance)
-            max.append(ci_df.z.max * tolerance)
+            max.append(ci_df.x.max() * tolerance)
+            max.append(ci_df.y.max() * tolerance)
+            max.append(ci_df.z.max() * tolerance)
             min = []
-            min.append(ci_df.x.max * tolerance)
-            min.append(ci_df.y.max * tolerance)
-            min.append(ci_df.z.max * tolerance)
+            min.append(ci_df.x.max() * tolerance)
+            min.append(ci_df.y.max() * tolerance)
+            min.append(ci_df.z.max() * tolerance)
             self.maxes.append(max)
             self.mins.append(min)
     
