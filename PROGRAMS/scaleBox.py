@@ -17,13 +17,13 @@ class BoxScale:
     
     degree = 5
 
-    def __init__(self, fileName, inputFolder):
+    def __init__(self, fileName, inputFolder, outputFolder):
         self.calRead = CalReadings(inputFolder, fileName)
         self.emPivot = EMPivot(inputFolder, fileName)
         self.ctFid = CTFiducials(inputFolder, fileName)
         self.emFid = EMFiducials(inputFolder, fileName)
         self.emNav = EMNav(inputFolder, fileName)
-        self.emOutput = OutputWriter(inputFolder, fileName, self.emNav.numFrames)
+        self.emOutput = OutputWriter(outputFolder, fileName, self.emNav.numFrames)
         #find actual from expected using function from assignment 1, 4 
         self.ciExpected = []
         for i in range(self.calRead.numFrames):
@@ -164,3 +164,4 @@ class BoxScale:
                 correctedArray[k].append(newPoint)
         
         return correctedArray
+    
