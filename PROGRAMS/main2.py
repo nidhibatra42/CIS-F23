@@ -13,6 +13,7 @@ outputFolder = os.path.join(parentFolder, outputFolder)
 prog = BoxScale('pa2-debug-a', inputFolder, outputFolder)
 
 prog.create_scale_box()
+prog.get_ci_expecteds()
 prog.generate_distortion_correction()
 prog.problem_4()
 prog.problem_5()

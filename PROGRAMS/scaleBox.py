@@ -21,6 +21,8 @@ class BoxScale:
     degree = 5
 
     def __init__(self, fileName, inputFolder, outputFolder):
+        self.fileName = fileName
+        self.outputFolder = outputFolder
         self.calRead = CalReadings(inputFolder, fileName)
         self.calObj = CalBody(inputFolder, fileName)
         self.emPivot = EMPivot(inputFolder, fileName)
@@ -39,9 +41,9 @@ class BoxScale:
         self.ciExpected = []
         for i in range(self.calRead.numFrames):
             self.p1Output.add_frame(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
-        
+        o1Filename = self.outputFolder + '/' + self.fileName + '-output1.txt'
         #self.calObj.numEMCalMarkers, self.calRead.numFrames
-        o1Data = pd.read_csv(self.fileName, delimiter=',', skiprows=[0, 1, 2], names=['x', 'y', 'z'])
+        o1Data = pd.read_csv(o1Filename, delimiter=',', skiprows=[0], names=['x', 'y', 'z'])
         x_coors = o1Data['x']
         y_coors = o1Data['y']
         z_coors = o1Data['z']
@@ -97,9 +99,9 @@ class BoxScale:
 
     def create_f_row(self, point):
         f_row = []
-        for i in range(self.maxDegree + 1):
-            for j in range(self.maxDegree + 1):
-                for k in range(self.maxDegree + 1):
+        for i in range(self.degree + 1):
+            for j in range(self.degree + 1):
+                for k in range(self.degree + 1):
                     bs = []
                     bs.append(self.single_coor_bernstein(point[0], i))
                     bs.append(self.single_coor_bernstein(point[1], j))
