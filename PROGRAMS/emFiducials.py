@@ -21,8 +21,9 @@ class EMFiducials:
         Args:
             folder (str): The folder path where EM Fiducials data is located.
             name (str): The name of the EM Fiducials data file.
-        """      
-        self.fileExtension = '-em-fiducials.txt'
+        """    
+        #extra s to compensate for typo in generated source files >:(  
+        self.fileExtension = '-em-fiducialss.txt'
         self.fileName =  folder + '/' + name + self.fileExtension
         self.data = pd.read_csv(self.fileName, delimiter=',')
         self.data_setup()
