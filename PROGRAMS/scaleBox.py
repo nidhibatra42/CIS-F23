@@ -120,8 +120,7 @@ class BoxScale:
             F = self.create_F(self.ci[k], k)
 
             calMatrix = np.linalg.lstsq(F, self.ciExpected[k], None)
-            self.calMatrices.append(calMatrix)
-        
+            self.calMatrices.append(calMatrix[0])
         
     
     def recalibrate(self):
@@ -186,7 +185,7 @@ class BoxScale:
         for k in range(numFrames):
             correctedArray.append([])
             for point in points[k]:
-                newPoint = np.dot(self.calMatrices[k], self.create_f_row(self.scale_to_box(point, k)))
+                newPoint = np.dot(np.transpose(self.create_f_row(self.scale_to_box(point, k))), self.calMatrices[k])
                 correctedArray[k].append(newPoint)
         
         return correctedArray
