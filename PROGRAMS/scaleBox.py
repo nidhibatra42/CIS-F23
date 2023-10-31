@@ -54,6 +54,7 @@ class BoxScale:
             for j in range(self.calObj.numEMCalMarkers):
                 p = Point(x_coors[k * self.calObj.numEMCalMarkers + j], y_coors[k * self.calObj.numEMCalMarkers + j], z_coors[k * self.calObj.numEMCalMarkers + j]) 
                 self.ciExpected[k].append(p.to_array())  
+        
 
     #need to determine bounding box to scale values
     def create_scale_box(self):
@@ -96,6 +97,8 @@ class BoxScale:
 
         for point in scaledPoints:
             F.append(self.create_f_row(point))
+        
+        return F
 
     def create_f_row(self, point):
         f_row = []
@@ -108,6 +111,7 @@ class BoxScale:
                     bs.append(self.single_coor_bernstein(point[2], k))
 
                     f_row.append(bs[0] * bs[1] * bs[2])
+        return f_row
 
 
     def generate_distortion_correction(self):
