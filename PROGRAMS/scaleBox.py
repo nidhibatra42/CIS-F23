@@ -154,7 +154,7 @@ class BoxScale:
         b_i_set = PointSet(b_i)
 
         #em coordinates
-        b_j = self.problem_4()
+        b_j = self.bj_emcoords()
         b_j_set = PointSet(b_j)
 
         R_D, p_D = b_j_set.find_registration(b_i_set)
@@ -178,7 +178,7 @@ class BoxScale:
         
         for point in finalEMNav:
             point4D = np.append(point, 1)
-            self.emOutput.add_pivot(transform(self.problem_5(), point4D ))
+            self.emOutput.add_pivot(transform(self.registration_frame(), point4D ))
 
 
     def undistort_array(self, points, numFrames):
