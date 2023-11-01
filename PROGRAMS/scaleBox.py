@@ -132,7 +132,7 @@ class BoxScale:
         return pivot_calibration(correctedGArray, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
 
-    def problem_4(self):
+    def bj_emcoords(self):
         #Return bj in em coordinates
         p_dimple = self.recalibrate()
 
@@ -148,7 +148,7 @@ class BoxScale:
         
         return finalEMFid
         
-    def problem_5(self):
+    def registration_frame(self):
         #ct coordinates
         b_i = self.ctFid.bArray
         b_i_set = PointSet(b_i)
@@ -161,8 +161,8 @@ class BoxScale:
         FD = transform_from(R_D, p_D)
 
         return FD
-    
-    def problem_6(self):
+    #tip location in ct coordinates
+    def tip_ct(self):
         #Return bj in em coordinates
         p_dimple = self.recalibrate()
 
