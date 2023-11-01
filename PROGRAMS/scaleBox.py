@@ -144,7 +144,7 @@ class BoxScale:
 
         finalEMFid = []
         for point in emFidMeans:
-            finalEMFid.append(np.dot(point, p_dimple))
+            finalEMFid.append(np.add(point, p_dimple))
         
         return finalEMFid
         
@@ -174,10 +174,11 @@ class BoxScale:
 
         finalEMNav = []
         for point in emNavMeans:
-            finalEMNav.append(np.dot(point, p_dimple))
+            finalEMNav.append(np.add(point, p_dimple))
         
         for point in finalEMNav:
-            self.emOutput.add_pivot(transform(self.problem_5(), point ))
+            point4D = np.append(point, 1)
+            self.emOutput.add_pivot(transform(self.problem_5(), point4D ))
 
 
     def undistort_array(self, points, numFrames):
