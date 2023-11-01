@@ -18,11 +18,14 @@ from point import Point
 
 class BoxScale:
     
+    #storing bernstein degree so its easier to manipulate
     degree = 5
 
     def __init__(self, fileName, inputFolder, outputFolder):
+       
         self.fileName = fileName
         self.outputFolder = outputFolder
+        #create instances of objects from data files
         self.calRead = CalReadings(inputFolder, fileName)
         self.calObj = CalBody(inputFolder, fileName)
         self.emPivot = EMPivot(inputFolder, fileName)
@@ -30,19 +33,20 @@ class BoxScale:
         self.emFid = EMFiducials(inputFolder, fileName)
         self.emNav = EMNav(inputFolder, fileName)
         self.emOutput = EMOutputWriter(outputFolder, fileName, self.emNav.numFrames)
-        #find actual from expected using function from assignment 1, 4 
-        
         self.p1Output = OutputWriter(outputFolder, fileName, self.calObj.numEMCalMarkers, self.calRead.numFrames )
         self.ci = self.calRead.cArray
 
 
-    #it does what it says on the tin
+    #Function to get expected values for ci
     def get_ci_expecteds(self):
+        """
+        Calculate and store expected values for ci.
+        """
         self.ciExpected = []
         for i in range(self.calRead.numFrames):
+             # Add frame with expected values
             self.p1Output.add_frame(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
         o1Filename = self.outputFolder + '/' + self.fileName + '-output1.txt'
-        #self.calObj.numEMCalMarkers, self.calRead.numFrames
         o1Data = pd.read_csv(o1Filename, delimiter=',', skiprows=[0], names=['x', 'y', 'z'])
         x_coors = o1Data['x']
         y_coors = o1Data['y']
@@ -56,8 +60,11 @@ class BoxScale:
                 self.ciExpected[k].append(p.to_array())  
         
 
-    #need to determine bounding box to scale values
+    ## Function to create a bounding box for scaling values
     def create_scale_box(self):
+        """
+        Create a bounding box to scale values in ci.
+        """
         #Max and min store the maxes and mins of each data frame as [x_max_i, y_max_i, z_max_i]
         self.maxes = []
         self.mins = []
@@ -75,20 +82,30 @@ class BoxScale:
             self.maxes.append(max)
             self.mins.append(min)
     
+    # Function to scale a point to the bounding box
     def scale_to_box(self, point, frame):
+        """
+        Scale a point to fit within the bounding box.
+        """
         scaledPoint = []
         for i in range(3):
             scaledPoint.append((point[i] - self.mins[frame][i]) / self.maxes[frame][i] - self.mins[frame][i])
         
         return scaledPoint
             
-    
+    # Function to compute a single coordinate of Bernstein polynomial
     def single_coor_bernstein(self, coor, i):
+        """
+        Calculate a single coordinate of the Bernstein polynomial for distortion correction.
+        """
         return comb(self.degree, i) * pow(coor, i) * pow((1 - coor), (self.degree - i))
 
 
-    #Distortion correction for points -> list of the points in a given frame
+    # Function to create matrix F for distortion correction
     def create_F(self, points, k):
+        """
+        Create a matrix F for distortion correction based on scaled points and frame.
+        """
         F = []
 
         scaledPoints = []
@@ -100,7 +117,11 @@ class BoxScale:
         
         return F
 
+    # Function to create a row in matrix F
     def create_f_row(self, point):
+        """
+        Create a row in the matrix F using a scaled point.
+        """
         f_row = []
         for i in range(self.degree + 1):
             for j in range(self.degree + 1):
@@ -114,7 +135,11 @@ class BoxScale:
         return f_row
 
 
+    # Function to generate distortion correction
     def generate_distortion_correction(self):
+        """
+        Generate distortion correction matrices for each frame.
+        """
         self.calMatrices = []
         for k in range(self.calRead.numFrames):
             F = self.create_F(self.ci[k], k)
@@ -122,8 +147,11 @@ class BoxScale:
             calMatrix = np.linalg.lstsq(F, self.ciExpected[k], None)
             self.calMatrices.append(calMatrix[0])
         
-    
+    # Function to recalibrate pivot
     def recalibrate(self):
+        """
+        Recalibrate and return the recalibrated pivot.
+        """
         #New p dimple
         self.generate_distortion_correction()
 
@@ -131,9 +159,11 @@ class BoxScale:
 
         return pivot_calibration(correctedGArray, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
-
+    # Function to calculate bj in EM coordinates
     def bj_emcoords(self):
-        #Return bj in em coordinates
+        """
+        Calculate and return bj in EM coordinates by applying recalibration.
+        """
         p_dimple = self.recalibrate()
 
         correctedEMFid = self.undistort_array(self.emFid.GArray, self.emFid.numFrames)
@@ -148,7 +178,11 @@ class BoxScale:
         
         return finalEMFid
         
+    # Function to compute the registration frame
     def registration_frame(self):
+        """
+        Calculate and return the registration frame for mapping between CT and EM coordinates.
+        """
         #ct coordinates
         b_i = self.ctFid.bArray
         b_i_set = PointSet(b_i)
@@ -161,8 +195,12 @@ class BoxScale:
         FD = transform_from(R_D, p_D)
 
         return FD
-    #tip location in ct coordinates
+   
+    #Function to get the tip location in CT coordinates
     def tip_ct(self):
+        """
+        Calculate and record the tip location in CT coordinates.
+        """
         #Return bj in em coordinates
         p_dimple = self.recalibrate()
 
@@ -181,7 +219,11 @@ class BoxScale:
             self.emOutput.add_pivot(transform(self.registration_frame(), point4D ))
 
 
+    # Function to undistort an array of points
     def undistort_array(self, points, numFrames):
+        """
+        Undistort an array of points based on distortion correction matrices.
+        """
         correctedArray = []
         for k in range(numFrames):
             correctedArray.append([])
