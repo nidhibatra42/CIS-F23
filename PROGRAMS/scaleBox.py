@@ -8,13 +8,14 @@ from ctFiducials import CTFiducials
 from emFiducials import EMFiducials
 from pointSet import PointSet
 from emNav import EMNav
-from pivotCalibration import pivot_calibration
+from pivotCalibration import pivot_calibration, get_pointer_locations
 from pytransform3d.transformations import transform_from, transform
 from meanPoint import mean_point
 from emOutput import EMOutputWriter
 from outputWriter import OutputWriter
 from calBody import CalBody
 from point import Point
+
 
 class BoxScale:
     
@@ -157,6 +158,8 @@ class BoxScale:
 
         correctedGArray = self.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
 
+        correctedCExpecteds = self.undistort_array(self.ciExpected, self.calRead.numFrames)
+        
         return pivot_calibration(correctedGArray, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
     # Function to calculate bj in EM coordinates
@@ -164,7 +167,7 @@ class BoxScale:
         """
         Calculate and return bj in EM coordinates by applying recalibration.
         """
-        p_dimple = self.recalibrate()
+        self.p_dimple = self.recalibrate()
 
         correctedEMFid = self.undistort_array(self.emFid.GArray, self.emFid.numFrames)
 
@@ -174,7 +177,7 @@ class BoxScale:
 
         finalEMFid = []
         for point in emFidMeans:
-            finalEMFid.append(np.add(point, p_dimple))
+            finalEMFid.append(np.add(point, self.p_dimple))
         
         return finalEMFid
         
@@ -183,13 +186,16 @@ class BoxScale:
         """
         Calculate and return the registration frame for mapping between CT and EM coordinates.
         """
+        correctedEMFid = self.undistort_array(self.emFid.GArray, self.emFid.numFrames)
+        
+        fidMatrix = get_pointer_locations(correctedEMFid, self.emFid.numFrames, self.emFid.numProbeMarkers, self.p_dimple)
+
         #ct coordinates
         b_i = self.ctFid.bArray
         b_i_set = PointSet(b_i)
 
         #em coordinates
-        b_j = self.bj_emcoords()
-        b_j_set = PointSet(b_j)
+        b_j_set = PointSet(fidMatrix)
 
         R_D, p_D = b_j_set.find_registration(b_i_set)
         FD = transform_from(R_D, p_D)
@@ -201,22 +207,14 @@ class BoxScale:
         """
         Calculate and record the tip location in CT coordinates.
         """
-        #Return bj in em coordinates
-        p_dimple = self.recalibrate()
-
+        self.p_dimple = self.recalibrate()
         correctedEMNav = self.undistort_array(self.emNav.GArray, self.emNav.numFrames)
 
-        emNavMeans = []
-        for frame in correctedEMNav:
-            emNavMeans.append(mean_point(frame))
-
-        finalEMNav = []
-        for point in emNavMeans:
-            finalEMNav.append(np.add(point, p_dimple))
+        emNavPoints = get_pointer_locations(correctedEMNav, self.emNav.numFrames, self.emNav.numProbeMarkers, self.p_dimple)
         
-        for point in finalEMNav:
-            point4D = np.append(point, 1)
-            self.emOutput.add_pivot(transform(self.registration_frame(), point4D ))
+        F_reg = self.p5_2()
+        for point in emNavPoints:
+            self.emOutput.add_pivot(transform(F_reg, point)[:3])
 
 
     # Function to undistort an array of points
@@ -233,3 +231,77 @@ class BoxScale:
         
         return correctedArray
     
+    def p4_2(self):
+        p_dimple4D = np.append(self.p_dimple, 1)
+        correctedEMFid = self.undistort_array(self.emFid.GArray, self.emFid.numFrames)
+        correctedEMPiv = self.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
+
+        G_0 = mean_point(correctedEMPiv[0])
+
+        Gj = []
+
+        #for each point
+        for j in range(self.emPivot.numProbeMarkers):
+            Gj.append([])
+            #for each coordinate in the point
+            for i in range(3):
+                Gj[j].append(correctedEMPiv[0][j][i] - G_0[i])
+
+        Gj_set= PointSet(Gj)
+
+        fidMatrix = np.empty((1, 3))
+
+        for k in range(self.emFid.numFrames):
+            fid_set = PointSet(correctedEMFid[k])
+            R, p = Gj_set.find_registration(fid_set)
+            Freg = transform_from(R, p)
+            fid = transform(Freg, p_dimple4D)
+            fidMatrix = np.vstack((fidMatrix, fid[:3]))
+        
+        return fidMatrix
+
+    def p5_2(self):
+        self.p_dimple = self.recalibrate()
+
+        b_i = self.ctFid.bArray
+        b_i_set = PointSet(b_i)
+
+        fidSet = PointSet(self.p4_2())
+
+        R, p = fidSet.find_registration(b_i_set)
+        self.F_reg = transform_from(R, p)
+    
+    def p6_2(self):
+        correctedEMNav = self.undistort_array(self.emNav.GArray, self.emNav.numFrames)
+        correctedEMPiv = self.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
+
+        G_0 = mean_point(correctedEMPiv[0])
+
+        Gj = []
+
+        #for each point
+        for j in range(self.emPivot.numProbeMarkers):
+            Gj.append([])
+            #for each coordinate in the point
+            for i in range(3):
+                Gj[j].append(correctedEMPiv[0][j][i] - G_0[i])
+
+        Gj_set= PointSet(Gj)
+        p_dimple4D = np.append(self.p_dimple, 1)
+
+        for k in range(self.emNav.numFrames):
+            nav_set = PointSet(correctedEMNav[k])
+            R, p = Gj_set.find_registration(nav_set)
+            Freg = transform_from(R, p)
+            nav = transform(Freg, p_dimple4D)
+            self.emOutput.add_pivot(transform(self.F_reg, nav)[:3])
+        
+        
+
+
+
+
+            
+            
+            
+
