@@ -3,7 +3,15 @@ Hannah Puhov and Nidhi Batra
 
 
 Programming Assignment #2: 
-In additon to the programs from programming assignment 1, we wrote a new class to store methods for this assignment. 
+We added on to the programs from assignment 1. 
+
+main2.py - This is the main executable for assignment 2. It calls all the necessary functions to run through the steps outlined in the assignment to output the tip location with respect to CT coordinates. 
+
+CTfiducials class - This class allows you to read and process fiducial coordinate data from a file and stores it in arrays.
+
+EMFiducials class - This reads in the EMNav fiducial and store it in the corresponding arrays
+
+emNav class- This class allows you to read and process EM Nav data from a file storing it in an array
 
 
 Programming Assignment #1:
