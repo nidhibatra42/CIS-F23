@@ -1,7 +1,7 @@
 
 import unittest
 from unittest.mock import Mock
-from FindingTipCT import FindingTipCT  # Replace 'your_module' with the actual module where your BoxScale class is defined
+from FindingTipCT import FindingTipCT  
 
 class TestBoxScale(unittest.TestCase):
      
