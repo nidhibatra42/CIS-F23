@@ -1,7 +1,7 @@
 
 import unittest
 from unittest.mock import Mock, patch
-from scaleBox import BoxScale  # Replace 'your_module' with the actual module where your BoxScale class is defined
+from FindingTipCT import FindingTipCT  # Replace 'your_module' with the actual module where your BoxScale class is defined
 
 class TestBoxScale(unittest.TestCase):
      
@@ -11,7 +11,7 @@ class TestBoxScale(unittest.TestCase):
         cls.mock_cal_body = Mock()
         cls.mock_em_pivot = Mock()
 
-        cls.box_scale = BoxScale("sample_file", "sample_input_folder", "sample_output_folder")
+        cls.box_scale = FindingTipCT("sample_file", "sample_input_folder", "sample_output_folder")
         cls.box_scale.calRead = cls.mock_cal_readings
         cls.box_scale.calObj = cls.mock_cal_body
         cls.box_scale.emPivot = cls.mock_em_pivot
@@ -43,4 +43,4 @@ class TestBoxScale(unittest.TestCase):
         self.assertAlmostEqual(result, expected_result)
 
 if __name__ == '__main__':
-    unittest.main(BoxScale)
+    unittest.main(FindingTipCT)
