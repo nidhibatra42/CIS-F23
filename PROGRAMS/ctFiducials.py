@@ -4,7 +4,7 @@ import pandas as pd
 class CTFiducials:
     """A class for working with CT Fiducials data.
 
-    This class allows you to read and process EM Nav data from a file.
+    This class allows you to read and process fiducial coordinate data from a file.
 
     Attributes:
         numFrames (int): The number of frames in the EM Nav data.
@@ -16,11 +16,11 @@ class CTFiducials:
     bArray = []
 
     def __init__(self, folder, name):
-        """Initialize EM Nav object.
+        """Initialize CT fiducial object.
 
         Args:
-            folder (str): The folder path where EM Fiducials data is located.
-            name (str): The name of the EM Fiducials data file.
+            folder (str): The folder path where CT Fiducials data is located.
+            name (str): The name of the CT Fiducials data file.
         """      
         self.fileExtension = '-ct-fiducials.txt'
         self.fileName =  folder + '/' + name + self.fileExtension
@@ -28,7 +28,7 @@ class CTFiducials:
         self.data_setup()
 
     def data_setup(self):
-        """Read in the EMNav data and store it in the corresponding arrays
+        """Read in the fiducal data and store it in the corresponding arrays
         """  
         #Pandas inherently skips the first line, due to treating
         #it as a title, so we can call the coordinates as the entire range of rows              

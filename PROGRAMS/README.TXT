@@ -1,6 +1,20 @@
 # CIS-F23
 Hannah Puhov and Nidhi Batra
-Programming Assignment #1 
+
+
+Programming Assignment #2: 
+We added on to the programs from assignment 1. 
+
+main2.py - This is the main executable for assignment 2. It calls all the necessary functions to run through the steps outlined in the assignment to output the tip location with respect to CT coordinates. 
+
+CTfiducials class - This class allows you to read and process fiducial coordinate data from a file and stores it in arrays.
+
+EMFiducials class - This reads in the EMNav fiducial and store it in the corresponding arrays
+
+emNav class- This class allows you to read and process EM Nav data from a file storing it in an array
+
+
+Programming Assignment #1:
 
 To run the program open the folder called dist. There you will see the main application. Open this, wait for the cue,  and type in the input file prefix. The output file will be generated and the main will quit. To run the program with a file that was not included with the student data, please add that file to the "PA1 Student Data" folder.
 
@@ -34,5 +48,6 @@ testPivotCalibration.py - This is test method written to test our pivot calibrat
 testRegistration.py - This is a test method written to test our registration method written in question 2.
 
 test_Point.py - This is a test written to test our point class we wrote to help use the package we found in question 1 with the way we wanted to format our data for processing. 
+
 
 meanPoint.py - We wrote this method to compute the midpoint of the vectors. 

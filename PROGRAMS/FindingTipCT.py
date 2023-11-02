@@ -16,8 +16,7 @@ from outputWriter import OutputWriter
 from calBody import CalBody
 from point import Point
 
-
-class BoxScale:
+class FindingTipCT:
     
     #storing bernstein degree so its easier to manipulate
     degree = 5
