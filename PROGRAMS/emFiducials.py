@@ -4,10 +4,10 @@ import pandas as pd
 class EMFiducials:
     """A class for working with EM Fiducials data.
 
-    This class allows you to read and process EM Nav data from a file.
+    This class allows you to read and process EM fiducial data from a file.
 
     Attributes:
-        numFrames (int): The number of frames in the EM Nav data.
+        numFrames (int): The number of frames in the EM fiducial data.
         g (list of list of Point): A list of lists containing Point objects representing the marker positions for each frame.
         gArray (list of list of list): A list of lists of lists containing the marker positions as arrays for each frame.
     """ 
@@ -29,7 +29,7 @@ class EMFiducials:
         self.data_setup()
 
     def data_setup(self):
-        """Read in the EMNav data and store it in the corresponding arrays
+        """Read in the EMNav fiducial and store it in the corresponding arrays
         """  
         #Pandas inherently skips the first line, due to treating
         #it as a title, so we can call the coordinates as the entire range of rows              
