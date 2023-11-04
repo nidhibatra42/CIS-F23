@@ -5,11 +5,10 @@ from expectedValues import expected_values
 
 class DistortionCorrection:
 
-    def __init__(self, calRead, calObj, p1Output):
+    def __init__(self, calRead, calObj):
         self.degree = 5
         self.calRead = calRead
         self.calObj = calObj
-        self.p1Output = p1Output
         self.ci = self.calRead.cArray
 
      ## Function to create a bounding box for scaling values
@@ -61,8 +60,7 @@ class DistortionCorrection:
         """
         self.ciExpected = []
         for i in range(self.calRead.numFrames):
-             # Add frame with expected values
-            self.p1Output.add_frame(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
+            # Add frame with expected values
             self.ciExpected.append(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
         
 
@@ -124,4 +122,3 @@ class DistortionCorrection:
                 correctedArray[k].append(newPoint)
         
         return correctedArray
-

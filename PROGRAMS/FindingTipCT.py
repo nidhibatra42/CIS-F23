@@ -22,9 +22,7 @@ class FindingTipCT:
         """
         Recalibrate and return the recalibrated pivot.
         """
-
         correctedGArray = self.dist.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
-        
         return pivot_calibration(correctedGArray, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
     
@@ -72,6 +70,7 @@ class FindingTipCT:
             self.emOutput.add_pivot(transform(self.F_reg, nav)[:3])
         
         
+   
 
 
 

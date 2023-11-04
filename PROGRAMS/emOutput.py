@@ -11,7 +11,7 @@ class EMOutputWriter:
             numCalMarkers (int): The number of calibration markers.
             numFrames (int): The total number of frames in the output.
         """       
-        self.fileExtension = '-em-output2.txt'
+        self.fileExtension = '-output2.txt'
         self.fileName =  folder + '/' + name + self.fileExtension
 
         if not os.path.exists(folder):
