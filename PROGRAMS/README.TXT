@@ -13,6 +13,14 @@ EMFiducials class - This reads in the EMNav fiducial and store it in the corresp
 
 emNav class- This class allows you to read and process EM Nav data from a file storing it in an array
 
+DistortionCorrection class - This class applies distortion correction to the set of points 
+  function create_scale_box - creates a box that the values will fit inside when scaled 
+  function scale_to_box - scales the points to fit inside the box made in the previous function
+  function single_coor_bernstein - Calculate a single coordinate of the Bernstein polynomial for      distortion correction.
+  function get_ci_expecteds - Calculate and store expected values for ci.
+  function create_F - Create a matrix F for distortion correction based on scaled points and frame.
+  function create_f_row - Create a row in the matrix F using a scaled point and the single            coordinate Bernstein.
+  function generate_distortion_correction - Generate distortion correction matrices for each frame.
 
 Programming Assignment #1:
 
