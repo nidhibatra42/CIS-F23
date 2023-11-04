@@ -73,33 +73,3 @@ def find_p_dimple(R_fks, p_fks):
     # Return the result 'p_dimple' after discarding the first 3 elements (which correspond to the rotational part of the transformation)
     return p_dimple[3:]
     
-def get_pointer_locations(Xj, numFrames, numItems, p_dimple):
-    p_dimple4D = np.append(p_dimple, 1)
-
-    Xo = mean_point(Xj[0])
-
-    #find xj
-    xj = []
-
-    #for each point
-    for j in range(numItems):
-        xj.append([])
-        #for each coordinate in the point
-        for i in range(3):
-            xj[j].append(Xj[0][j][i] - Xo[i])
-
-    xjSet = PointSet(xj)
-    
-    pointerLocations = np.empty((1, 4))
-    #Fill in the arrays
-    for k in range(numFrames):
-        XjSet = PointSet(Xj[k])
-
-        R_fK, p_fK = xjSet.find_registration(XjSet)
-        F_k = transform_from(R_fK, p_fK)
-
-        pointer = transform(F_k, p_dimple4D)
-        pointerLocations = np.vstack((pointerLocations, pointer))
-    
-    return pointerLocations
-    

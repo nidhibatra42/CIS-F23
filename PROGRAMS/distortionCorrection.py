@@ -13,6 +13,7 @@ class DistortionCorrection:
         self.ci = self.calRead.cArray
 
      ## Function to create a bounding box for scaling values
+
     def create_scale_box(self):
         """
         Create a bounding box to scale values in ci.
@@ -109,4 +110,18 @@ class DistortionCorrection:
             F = self.create_F(self.ci[k], k)
             calMatrix = np.linalg.lstsq(F, self.ciExpected[k], None)
             self.calMatrices.append(calMatrix[0])
+
+        # Function to undistort an array of points
+    def undistort_array(self, points, numFrames):
+        """
+        Undistort an array of points based on distortion correction matrices.
+        """
+        correctedArray = []
+        for k in range(numFrames):
+            correctedArray.append([])
+            for point in points[k]:
+                newPoint = np.dot(np.transpose(self.create_f_row(self.scale_to_box(point, k))), self.calMatrices[k])
+                correctedArray[k].append(newPoint)
+        
+        return correctedArray
 
