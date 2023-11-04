@@ -5,7 +5,7 @@ Hannah Puhov and Nidhi Batra
 Programming Assignment #2: 
 We added on to the programs from assignment 1. 
 
-main2.py - This is the main executable for assignment 2. It calls all the necessary functions to run through the steps outlined in the assignment to output the tip location with respect to CT coordinates. 
+main2.py - This is the main executable for assignment 2. It calls all the necessary functions to run through the steps outlined in the assignment to output the tip location with respect to CT coordinates. Main generates all objects of the files.io classes and distortion correction class.
 
 The following classes have a function to set up the data as described in the class description:
   CTfiducials class - This class allows you to read and process fiducial coordinate data from a       file and stores it in arrays.
@@ -22,6 +22,13 @@ DistortionCorrection class - This class applies distortion correction to the set
   function create_F - Create a matrix F for distortion correction based on scaled points and frame.
   function create_f_row - Create a row in the matrix F using a scaled point and the single            coordinate Bernstein.
   function generate_distortion_correction - Generate distortion correction matrices for each frame.
+  function undistort_array -  Undistort an array of points based on distortion correction matrices.
+
+FindingTipCT class - This class calls the necessary functions to find the tip location.
+  function recalibrate - Recalibrate and return the recalibrated pivot.
+  function find_fid_pointer_locs - Find the location of the fiducials in EM.
+  function find_em_ct_f_reg - Find the Freg between EM and CT.
+  function find_emNav_in_ct - Find the pivot location in CT.
 
 Programming Assignment #1:
 
