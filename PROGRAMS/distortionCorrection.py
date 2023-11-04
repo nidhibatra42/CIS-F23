@@ -32,6 +32,7 @@ class DistortionCorrection:
             min.append(ci_df.x.min() * tolerance)
             min.append(ci_df.y.min() * tolerance)
             min.append(ci_df.z.min() * tolerance)
+            #storing maxes and mins
             self.maxes.append(max)
             self.mins.append(min)
 
@@ -43,6 +44,7 @@ class DistortionCorrection:
         """
         scaledPoint = []
         for i in range(3):
+            #formula for scaling a point
             scaledPoint.append((point[i] - self.mins[frame][i]) / self.maxes[frame][i] - self.mins[frame][i])
         
         return scaledPoint
@@ -88,14 +90,16 @@ class DistortionCorrection:
         Create a row in the matrix F using a scaled point.
         """
         f_row = []
+         
         for i in range(self.degree + 1):
             for j in range(self.degree + 1):
                 for k in range(self.degree + 1):
                     bs = []
+                  
                     bs.append(self.single_coor_bernstein(point[0], i))
                     bs.append(self.single_coor_bernstein(point[1], j))
                     bs.append(self.single_coor_bernstein(point[2], k))
-
+                    #add the correct product of the bernsteins to the row 
                     f_row.append(bs[0] * bs[1] * bs[2])
         return f_row
 
@@ -108,6 +112,7 @@ class DistortionCorrection:
         self.calMatrices = []
         for k in range(self.calRead.numFrames):
             F = self.create_F(self.ci[k], k)
+            #using least squares as outlined in procedure 
             calMatrix = np.linalg.lstsq(F, self.ciExpected[k], None)
             self.calMatrices.append(calMatrix[0])
 
@@ -120,6 +125,7 @@ class DistortionCorrection:
         for k in range(numFrames):
             correctedArray.append([])
             for point in points[k]:
+                #undistort using calibration matrix we found
                 newPoint = np.dot(np.transpose(self.create_f_row(self.scale_to_box(point, k))), self.calMatrices[k])
                 correctedArray[k].append(newPoint)
         

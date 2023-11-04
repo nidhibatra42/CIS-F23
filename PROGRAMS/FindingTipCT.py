@@ -24,19 +24,24 @@ class FindingTipCT:
         """
 
         correctedGArray = self.dist.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
-        
+        #pivot calibration with the undistorited array
         return pivot_calibration(correctedGArray, self.emPivot.numFrames, self.emPivot.numProbeMarkers)
             
     
     def find_fid_pointer_locs(self):
+        """
+        Find the location of the fiducials in EM.
+        """
+        #for dimension purposes in calculations p_dimple needs to have 4 values 
         p_dimple4D = np.append(self.p_dimple, 1)
+        #undistort relevant arrays
         correctedEMFid = self.dist.undistort_array(self.emFid.GArray, self.emFid.numFrames)
         correctedEMPiv = self.dist.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
 
         Gj_set = PointSet(correctedEMPiv[0])
 
         fidMatrix = np.empty((1, 3))
-
+        #matrix of fiducial locations
         for k in range(self.emFid.numFrames):
             fid_set = PointSet(correctedEMFid[k])
             R, p = Gj_set.find_registration(fid_set)
@@ -47,17 +52,25 @@ class FindingTipCT:
         return fidMatrix
 
     def find_em_ct_f_reg(self):
+        """
+        Find the Freg between EM and CT.
+        """
         self.p_dimple = self.recalibrate()
 
         b_i = self.ctFid.bArray
         b_i_set = PointSet(b_i)
 
         fidSet = PointSet(self.find_fid_pointer_locs())
-
+        #call function written in programming 1
         R, p = fidSet.find_registration(b_i_set)
+        #this is from pyratransform
         self.F_reg = transform_from(R, p)
     
     def find_emNav_in_ct(self):
+        """
+        Find the pivot location in CT.
+        """
+        #undistort relevant arrays
         correctedEMNav = self.dist.undistort_array(self.emNav.GArray, self.emNav.numFrames)
         correctedEMPiv = self.dist.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
         
