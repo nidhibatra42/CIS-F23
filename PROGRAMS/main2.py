@@ -10,6 +10,7 @@ outputFolder = "OUTPUT"
 inputFolder = os.path.join(parentFolder, inputFolder)
 outputFolder = os.path.join(parentFolder, outputFolder)
 
+fileName = input("Enter the file prefix (i.e. pa2-debug-a): ")
 prog = FindingTipCT('pa2-debug-a', inputFolder, outputFolder)
 
 prog.create_scale_box()

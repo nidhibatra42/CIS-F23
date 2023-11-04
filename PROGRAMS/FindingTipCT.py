@@ -79,9 +79,9 @@ class FindingTipCT:
             max.append(ci_df.y.max() * tolerance)
             max.append(ci_df.z.max() * tolerance)
             min = []
-            min.append(ci_df.x.max() * tolerance)
-            min.append(ci_df.y.max() * tolerance)
-            min.append(ci_df.z.max() * tolerance)
+            min.append(ci_df.x.min() * tolerance)
+            min.append(ci_df.y.min() * tolerance)
+            min.append(ci_df.z.min() * tolerance)
             self.maxes.append(max)
             self.mins.append(min)
     
