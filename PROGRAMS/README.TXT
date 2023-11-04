@@ -7,12 +7,21 @@ We added on to the programs from assignment 1.
 
 main2.py - This is the main executable for assignment 2. It calls all the necessary functions to run through the steps outlined in the assignment to output the tip location with respect to CT coordinates. 
 
-CTfiducials class - This class allows you to read and process fiducial coordinate data from a file and stores it in arrays.
+The following classes have a function to set up the data as described in the class description:
+  CTfiducials class - This class allows you to read and process fiducial coordinate data from a       file and stores it in arrays.
 
-EMFiducials class - This reads in the EMNav fiducial and store it in the corresponding arrays
+  EMFiducials class - This reads in the EMNav fiducial and store it in the corresponding arrays
 
-emNav class- This class allows you to read and process EM Nav data from a file storing it in an array
+  emNav class- This class allows you to read and process EM Nav data from a file storing it in an     array
 
+DistortionCorrection class - This class applies distortion correction to the set of points 
+  function create_scale_box - creates a box that the values will fit inside when scaled 
+  function scale_to_box - scales the points to fit inside the box made in the previous function
+  function single_coor_bernstein - Calculate a single coordinate of the Bernstein polynomial for      distortion correction.
+  function get_ci_expecteds - Calculate and store expected values for ci.
+  function create_F - Create a matrix F for distortion correction based on scaled points and frame.
+  function create_f_row - Create a row in the matrix F using a scaled point and the single            coordinate Bernstein.
+  function generate_distortion_correction - Generate distortion correction matrices for each frame.
 
 Programming Assignment #1:
 
