@@ -46,6 +46,9 @@ class FindingTipCT:
         for i in range(self.calRead.numFrames):
              # Add frame with expected values
             self.p1Output.add_frame(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
+            self.ciExpected.append(expected_values(self.calRead.dArray[i], self.calRead.aArray[i], self.calObj.dArray, self.calObj.aArray, self.calObj.cArray))
+       
+        """
         o1Filename = self.outputFolder + '/' + self.fileName + '-output1.txt'
         o1Data = pd.read_csv(o1Filename, delimiter=',', skiprows=[0], names=['x', 'y', 'z'])
         x_coors = o1Data['x']
@@ -58,7 +61,7 @@ class FindingTipCT:
             for j in range(self.calObj.numEMCalMarkers):
                 p = Point(x_coors[k * self.calObj.numEMCalMarkers + j], y_coors[k * self.calObj.numEMCalMarkers + j], z_coors[k * self.calObj.numEMCalMarkers + j]) 
                 self.ciExpected[k].append(p.to_array())  
-        
+        """
 
     ## Function to create a bounding box for scaling values
     def create_scale_box(self):
@@ -235,18 +238,7 @@ class FindingTipCT:
         correctedEMFid = self.undistort_array(self.emFid.GArray, self.emFid.numFrames)
         correctedEMPiv = self.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
 
-        G_0 = mean_point(correctedEMPiv[0])
-
-        Gj = []
-
-        #for each point
-        for j in range(self.emPivot.numProbeMarkers):
-            Gj.append([])
-            #for each coordinate in the point
-            for i in range(3):
-                Gj[j].append(correctedEMPiv[0][j][i] - G_0[i])
-
-        Gj_set= PointSet(Gj)
+        Gj_set = PointSet(correctedEMPiv[0])
 
         fidMatrix = np.empty((1, 3))
 
@@ -273,19 +265,8 @@ class FindingTipCT:
     def p6_2(self):
         correctedEMNav = self.undistort_array(self.emNav.GArray, self.emNav.numFrames)
         correctedEMPiv = self.undistort_array(self.emPivot.GArray, self.emPivot.numFrames)
-
-        G_0 = mean_point(correctedEMPiv[0])
-
-        Gj = []
-
-        #for each point
-        for j in range(self.emPivot.numProbeMarkers):
-            Gj.append([])
-            #for each coordinate in the point
-            for i in range(3):
-                Gj[j].append(correctedEMPiv[0][j][i] - G_0[i])
-
-        Gj_set= PointSet(Gj)
+        
+        Gj_set= PointSet(correctedEMPiv[0])
         p_dimple4D = np.append(self.p_dimple, 1)
 
         for k in range(self.emNav.numFrames):
