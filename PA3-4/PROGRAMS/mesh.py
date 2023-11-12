@@ -3,16 +3,15 @@ from point import Point
 
 class Mesh:
     
-    def __init__(self, folder, name, problem):
+    def __init__(self, folder, problem):
         """Initialize a CalBody instance.
 
         Args:
             folder (str): The folder containing mesh data files.
-            name (str): The name of the mesh data file.
             problem (int): the problem number (3 or 4)
         """      
         self.fileExtension = 'Problem' + str(problem) + 'Mesh.sur'
-        self.fileName =  folder + '/' + name + self.fileExtension
+        self.fileName =  folder + '/' + self.fileExtension
         self.data = pd.read_csv(self.fileName, delimiter=' ', skiprows=[0], names=['x', 'y', 'z'])
         self.data_setup()
 
