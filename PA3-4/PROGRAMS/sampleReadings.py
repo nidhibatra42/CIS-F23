@@ -1,7 +1,7 @@
 import pandas as pd
 from point import Point
 
-class Body:
+class SampleReadings:
     
     def __init__(self, folder, name, problem, aMarks, bMarks):
         """Initialize a CalBody instance.
