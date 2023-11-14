@@ -59,7 +59,22 @@ class Mesh:
             tri_neighbors = ([i1[i], i2[i], i3[i]], [n1[i], n2[i], n3[i]])
             self.triArray.append(tri_neighbors)
 
+    def get_triangle(self, index):  
+        """_summary_
 
+        Args:
+            index (int): index of the triangle in the array
+
+        Returns:
+            1x3 array: vertices of the triangle
+        """            
+        vert_indices = self.triArray[index][0]
+        v1 = self.vArray[vert_indices[0]]
+        v2 = self.vArray[vert_indices[1]]
+        v3 = self.vArray[vert_indices[2]]
+
+        return [v1, v2, v3]
+        
         
     
    
