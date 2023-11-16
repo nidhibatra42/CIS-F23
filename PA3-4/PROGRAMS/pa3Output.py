@@ -18,7 +18,7 @@ class PA3Output:
              os.makedirs(folder)
 
         with open(self.fileName, 'w') as output:
-            line1 = f"{numFrames}, {name + self.fileExtension}\n"
+            line1 = f"{numFrames}, {self.fileExtension}\n"
             output.write(line1)
             output.close()
         
