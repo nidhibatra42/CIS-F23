@@ -11,8 +11,8 @@ class PA3Output:
             numFrames (int): The total number of frames in the output.
             problem (int): problem 3 or 4
         """       
-        self.fileExtension = 'pa3-' + str(problem) + '-Output.txt'
-        self.fileName =  folder + '/' + name + self.fileExtension
+        self.fileExtension = 'PA' + str(problem) + '-' + name + '-Output.txt'
+        self.fileName =  folder + '/' + self.fileExtension
 
         if not os.path.exists(folder):
              os.makedirs(folder)

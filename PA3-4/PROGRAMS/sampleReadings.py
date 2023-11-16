@@ -55,7 +55,7 @@ class SampleReadings:
             self.aArray.append([])
             self.bArray.append([])
             for i in range(self.numMarkers):
-                p = Point(x_coors[i], y_coors[i], z_coors[i])
+                p = Point(x_coors[k * self.numMarkers + i], y_coors[k * self.numMarkers + i], z_coors[k * self.numMarkers + i])
                 if i < self.aMarks:
                     self.aArray[k].append(p.to_array())
                 elif i < self.aMarks + self.bMarks:
