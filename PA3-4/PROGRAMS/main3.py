@@ -18,7 +18,7 @@ outputFolder = os.path.join(parentFolder, outputFolder)
 #Prompt for user input of filename
 #fileName = input("Enter the file prefix (i.e. A-Debug): ")
 
-fileName = 'D-Debug'
+fileName = 'E-Debug'
 
 #Construct all the 
 bodyA = Body(inputFolder, 3, 'A')
