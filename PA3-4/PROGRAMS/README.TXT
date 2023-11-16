@@ -22,6 +22,8 @@ The following files contain the necessary methods to find the closest point:
 
   findClosestPoint.py has a slow and fast method. The slow method iterates through each triangle in the mesh, while the fast method uses bounding spheres to decrease search time.
 
+  kdTree.py has a tree that recursively sorts the triangles into cells. This implements a faster way to find the closest point because only the triangles in point a's cell or its neighbors are checked, rather than the entire list of triangles.
+
 findDks.py contains the method to find the tip of body B in tracker coordinates using body A and sampleReadings data, and frame transformations made between them.
 
 From Programming Assignment #1:
