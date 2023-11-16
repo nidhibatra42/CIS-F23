@@ -15,10 +15,20 @@ def distance_squared(x, a, tri):
         float: distance squared between the barycentric point and a
     """    
     l, u, v = x
-    point = l * tri[0] + u * tri[1] + v * tri[2]
+    v0 = 0
+    v1 = 0
+    v2 = 0
+
+
+    v0 = l * tri[0][0] + u * tri[1][0] + v * tri[2][0]
+    v1 = l * tri[0][1] + u * tri[1][1] + v * tri[2][1]
+    v2 = l * tri[0][2] + u * tri[1][2] + v * tri[2][2]
+
+
+    point = [v0, v1, v2, 1]
     return np.sum((point - a)**2)
 
-def constraint(x):
+def sum_constraint(x):
     """l + u + v = 1
 
     Args:
@@ -34,7 +44,7 @@ def barycentric_formulation(a, tri):
         between 3d point a and a triangle in 3d space
 
     Args:
-        a (1x3 array): point to compare
+        a (1x3 array): point to compare*
         tri (3x(1x3 array)): triangle in 3d space
 
     Returns:
@@ -43,10 +53,10 @@ def barycentric_formulation(a, tri):
     guess = mean_point(tri)  # Initial guess for barycentric coordinates
 
     # Constraint: l + u + v = 1
-    constraint = [{'type': 'eq', 'fun': constraint}]
+    constraint = [{'type': 'eq', 'fun': sum_constraint}]
 
     # Minimize the squared distance function
-    result = minimize(distance_squared, guess, args=(a, tri[0], tri[1], tri[2]), constraints=constraint)
+    result = minimize(fun=distance_squared, x0=guess, args=(a, tri), constraints=constraint)
 
     #Return [l, u, v]
     return result.x
@@ -70,7 +80,7 @@ def project_on_segment(c, p, q):
 
     l_seg = max(0, min(l, 1))
 
-    return p_np + np.cross(l_seg, (q_np - p_np))
+    return p_np + l_seg * (q_np - p_np)
 
 
 def find_closest_point(a, tri):
@@ -90,7 +100,17 @@ def find_closest_point(a, tri):
     u = bary[1]
     v = bary[2]
 
-    c = l * tri[0] + u * tri[1] + v * tri[2]
+    v0 = 0
+    v1 = 0
+    v2 = 0
+
+
+    v0 = l * tri[0][0] + u * tri[1][0] + v * tri[2][0]
+    v1 = l * tri[0][1] + u * tri[1][1] + v * tri[2][1]
+    v2 = l * tri[0][2] + u * tri[1][2] + v * tri[2][2]
+
+    c = [v0, v1, v2]
+
     if l >= 0 and u >=0 and v >= 0:
         return c
     elif l < 0:

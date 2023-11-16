@@ -24,11 +24,11 @@ def find_closest_point_slow(a, mesh):
         
     #initial guess: closest point is the first vertex
     #of the first triangle
-    p = mesh.vArray(mesh.triArray[0][0])
-    d = dist(a, p)
+    p = mesh.get_triangle(0)
+    d = dist(a, p[0])
 
     #Iterate through each triangle to find the closest
-    for index in range(mesh.numTriangles):
+    for index in range(1, int(mesh.numTriangles)):
         tri = mesh.get_triangle(index)
 
         p_cur = find_closest_point(a, tri)

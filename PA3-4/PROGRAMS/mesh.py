@@ -44,7 +44,7 @@ class Mesh:
         self.numTriangles = x_coors[self.numVertices]
 
         #Re-read in the data for only the triangle indices
-        triData = pd.read_csv(self.fileName, delimiter=' ', skiprows=range(self.numVertices + 1), names=['i1', 'i2', 'i3', 'n1', 'n2', 'n3'] )
+        triData = pd.read_csv(self.fileName, delim_whitespace=True, skiprows=range(self.numVertices + 2), names=['i1', 'i2', 'i3', 'n1', 'n2', 'n3'] )
         i1 = triData['i1']
         i2 = triData['i2']
         i3 = triData['i3']
