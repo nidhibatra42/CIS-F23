@@ -32,8 +32,9 @@ class PA3Output:
         """   
 
         with open (self.fileName, 'a') as output:
-                rounded_pivot = [round(x, 2) for x in pivot]
-                output.write(', '.join(map(str, rounded_pivot)) + '\n')
+                rounded_pivot = [round(x, 2) for x in pivot[0:6]]
+                fin = round(pivot[6], 3)
+                output.write(', '.join(map(str, rounded_pivot)) + ', ' + str(fin) + '\n')
         output.close()  
 
 
