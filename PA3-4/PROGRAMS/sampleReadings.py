@@ -13,8 +13,8 @@ class SampleReadings:
             aMarks (int) the number of LED markers on body A
             bMarks(int) the number of LED markers on body B
         """      
-        self.fileExtension = 'PA' + str(problem) + name + '-SampleReadings.txt'
-        self.fileName =  folder + '/' + name + self.fileExtension
+        self.fileExtension = 'PA' + str(problem) + '-' + name + '-SampleReadingsTest.txt'
+        self.fileName =  folder + '/' + self.fileExtension
         self.data = pd.read_csv(self.fileName, delimiter=',', skiprows=[0], names=['x', 'y', 'z'])
         self.aMarks = aMarks
         self.bMarks = bMarks

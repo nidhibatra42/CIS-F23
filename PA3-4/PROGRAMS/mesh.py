@@ -12,7 +12,7 @@ class Mesh:
         """      
         self.fileExtension = 'Problem' + str(problem) + 'Mesh.sur'
         self.fileName =  folder + '/' + self.fileExtension
-        self.data = pd.read_csv(self.fileName, delimiter=' ', skiprows=[0], names=['x', 'y', 'z'])
+        self.data = pd.read_csv(self.fileName, delimiter=' ', skiprows=[0], names=['x', 'y', 'z', 'na1', 'na2', 'na3'])
         self.data_setup()
 
     def data_setup(self):
@@ -55,7 +55,7 @@ class Mesh:
         #List of tuples that hold: indices of current triangle vertices,
         #indices of neighboring triangles
         self.triArray = []
-        for i in range(self.numTriangles):
+        for i in range(int(self.numTriangles)):
             tri_neighbors = ([i1[i], i2[i], i3[i]], [n1[i], n2[i], n3[i]])
             self.triArray.append(tri_neighbors)
 

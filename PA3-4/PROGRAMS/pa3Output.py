@@ -1,6 +1,6 @@
 import os
 
-class pa3Output:
+class PA3Output:
     """Class for writing output data to a text file."""
     def __init__(self, folder, name, numFrames, problem):
         """Initialize the OutputWriter.
