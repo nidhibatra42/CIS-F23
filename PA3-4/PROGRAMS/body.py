@@ -13,7 +13,7 @@ class Body:
         """      
         self.fileExtension = 'Problem' + str(problem) + '-Body' + body + '.txt'
         self.fileName =  folder + '/' + self.fileExtension
-        self.data = pd.read_csv(self.fileName, delimiter=',', skiprows=[0], names=['x', 'y', 'z'])
+        self.data = pd.read_csv(self.fileName, delim_whitespace=True, skiprows=[0], names=['x', 'y', 'z'])
         self.data_setup()
 
     def data_setup(self):
