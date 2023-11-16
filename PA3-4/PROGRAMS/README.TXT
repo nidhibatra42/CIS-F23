@@ -1,7 +1,7 @@
 # CIS-F23
 Hannah Puhov and Nidhi Batra
 
-
+LINK TO THE ZIP FOLDER WITH .EXE: https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/hpuhov1_jh_edu/EU6SBaC0aiFCsAcVkRuVDe8BbFg66feGdicp6iWEvz8Zrg?e=b3MUjj
 Programming Assignment #3
 
 To run the program open the folder called dist. There you will see the main2 application. Open this, wait for the cue,  and type in the input file prefix. The output file will be generated and the main will quit. To run the program with a file that was not included with the student data, please add that file to the "2023 PA345 Student Data" folder.
