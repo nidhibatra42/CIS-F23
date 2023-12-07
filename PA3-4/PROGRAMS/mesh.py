@@ -10,7 +10,7 @@ class Mesh:
             folder (str): The folder containing mesh data files.
             problem (int): the problem number (3 or 4)
         """      
-        self.fileExtension = 'Problem' + str(problem) + 'Mesh.sur'
+        self.fileExtension = 'Problem' + str(problem) + 'MeshFile.sur'
         self.fileName =  folder + '/' + self.fileExtension
         self.data = pd.read_csv(self.fileName, delimiter=' ', skiprows=[0], names=['x', 'y', 'z', 'na1', 'na2', 'na3'])
         self.data_setup()
