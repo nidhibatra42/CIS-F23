@@ -3,7 +3,7 @@ Hannah Puhov and Nidhi Batra
 
 Programming Assignment #4
 
-To run the program open the folder called dist. There you will see the main2 application. Open this, wait for the cue,  and type in the input file prefix. The output file will be generated and the main will quit. To run the program with a file that was not included with the student data, please add that file to the "2023 PA345 Student Data" folder.
+To run the program open the folder called dist. There you will see the main4 application. Open this, wait for the cue,  and type in the input file prefix. The output file will be generated and the main will quit. To run the program with a file that was not included with the student data, please add that file to the "2023 PA345 Student Data" folder.
 
 main4.py - This is the main executable for assignment 4. It calls all the necessary functions to run through the steps outlined in the assignment to output the tip locations at each frame in tracker coordinates after iterating through various F_reg to find the best one. Main generates all objects of the file io classes
 
