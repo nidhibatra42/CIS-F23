@@ -1,12 +1,11 @@
 # CIS-F23
 Hannah Puhov and Nidhi Batra
 
-LINK TO THE ZIP FOLDER WITH .EXE: https://livejohnshopkins-my.sharepoint.com/:u:/g/personal/hpuhov1_jh_edu/EU6SBaC0aiFCsAcVkRuVDe8BbFg66feGdicp6iWEvz8Zrg?e=b3MUjj
-Programming Assignment #3
+Programming Assignment #4
 
 To run the program open the folder called dist. There you will see the main2 application. Open this, wait for the cue,  and type in the input file prefix. The output file will be generated and the main will quit. To run the program with a file that was not included with the student data, please add that file to the "2023 PA345 Student Data" folder.
 
-main3.py - This is the main executable for assignment 3. It calls all the necessary functions to run through the steps outlined in the assignment to output the tip locations at each frame in tracker coordinates. Main generates all objects of the file io classes
+main4.py - This is the main executable for assignment 4. It calls all the necessary functions to run through the steps outlined in the assignment to output the tip locations at each frame in tracker coordinates after iterating through various F_reg to find the best one. Main generates all objects of the file io classes
 
 The following classes have a function to set up the data as described in the class description:
   mesh class - This class allows you to read and process the mesh file and stores it in arrays (one of all vertices, one of all triangles and neighbors).
@@ -22,9 +21,11 @@ The following files contain the necessary methods to find the closest point:
 
   findClosestPoint.py has a slow and fast method. The slow method iterates through each triangle in the mesh, while the fast method uses bounding spheres to decrease search time.
 
-  kdTree.py has a tree that recursively sorts the triangles into cells. This implements a faster way to find the closest point because only the triangles in point a's cell or its neighbors are checked, rather than the entire list of triangles.
+  boundingSpheres.py creates a bounding sphere with a specific radius and diameter that perfectly encapsulates a triangle in 3D soave.
 
-findDks.py contains the method to find the tip of body B in tracker coordinates using body A and sampleReadings data, and frame transformations made between them.
+  findDks.py contains the method to find the tip of body B in tracker coordinates using body A and sampleReadings data, and frame transformations made between them.
+
+  FregIteration iterates through all of the closest points to d_ks and finds a registration method to get from d_k to c_k. It then repeats this process to find a better Freg until it converges or 15 trials have been run.
 
 From Programming Assignment #1:
 
